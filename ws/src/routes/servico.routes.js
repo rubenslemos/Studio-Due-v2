@@ -81,7 +81,9 @@ router.put('/:id', async(req, res) => {
             }
             //criar serviço
             const jsonServico = JSON.parse(servico)
-            await servicos.Servico.findByIdAndUpdate(req.params.id, jsonServico)
+            console.log("JSONServico: ", jsonServico)
+            console.log("Params id: ", req.params.id)
+            await servicos.Servico.findByIdAndUpdate(salaoId, jsonServico)
                 //criar arquivo
             arquivos = arquivos.map(arquivo => ({
                 referenciaId: req.params.id,
@@ -96,5 +98,15 @@ router.put('/:id', async(req, res) => {
         }
     })
     req.pipe(busboy)
+})
+router.delete('/arquivo/:id', async(req, res) => {
+    try {
+        const { id } = req.params
+        await AWS.deleteFileS3(id)
+        await Arquivo.Arquivo.findOneAndDelete({ caminho: id })
+        res.json({ error: false })
+    } catch (err) {
+        res.json({ error: true, message: err.message })
+    }
 })
 module.exports = router
