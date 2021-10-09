@@ -1,7 +1,7 @@
 {
-    "name": "studiodue",
+    "name": "studioDue",
     "version": "1.0.0",
-    "description": "programa para salao de cabeleleiros",
+    "description": "programa para salão de cabeleireiros",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,6 +10,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@turf/turf": "^6.5.0",
         "aws-sdk": "^2.1001.0",
         "busboy": "^0.3.1",
         "busboy-body-parser": "^0.3.2",

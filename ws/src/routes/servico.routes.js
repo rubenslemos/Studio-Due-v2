@@ -81,9 +81,7 @@ router.put('/:id', async(req, res) => {
             }
             //criar serviço
             const jsonServico = JSON.parse(servico)
-            console.log("JSONServico: ", jsonServico)
-            console.log("Params id: ", req.params.id)
-            await servicos.Servico.findByIdAndUpdate(salaoId, jsonServico)
+            await servicos.Servico.findByIdAndUpdate(req.params.id, jsonServico)
                 //criar arquivo
             arquivos = arquivos.map(arquivo => ({
                 referenciaId: req.params.id,
@@ -92,21 +90,55 @@ router.put('/:id', async(req, res) => {
             }))
 
             await Arquivo.Arquivo.insertMany(arquivos)
-            res.json({ error: false })
+            res.json({ Servico: "Alterado Com Sucesso" })
         } catch (err) {
             res.json({ error: true, message: err.message })
         }
     })
     req.pipe(busboy)
 })
-router.delete('/arquivo/:id', async(req, res) => {
+router.post('/delete', async(req, res) => {
     try {
-        const { id } = req.params
-        await AWS.deleteFileS3(id)
-        await Arquivo.Arquivo.findOneAndDelete({ caminho: id })
-        res.json({ error: false })
+        const { id } = req.body
+        await aws.deleteFileS3(id)
+        await Arquivo.Arquivo.findOneAndDelete({
+            caminho: id,
+        })
+        res.json({ Arquivo: "Deletado Com Sucesso" })
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
+})
+router.delete('/:id', async(req, res) => {
+    try {
+        const { id } = req.params
+        console.log(id)
+        await servicos.Servico.findOneAndUpdate(id, { status: "E" })
+        res.json({ Serviço: "Deletado Com Sucesso" })
+    } catch (err) {
+        res.json({ error: true, message: err.message })
+
+    }
+})
+
+router.get('/salao/:salaoId', async(req, res) => {
+    try {
+        let servicosSalao = []
+        const Servicos = await servicos.Servico.find({
+            salaoId: req.params.salaoId,
+            status: { $ne: "E" }
+        })
+        for (let servico of Servicos) {
+            const arquivo = await Arquivo.Arquivo.find({
+                model: 'Servico',
+                referenciaId: servico._id
+            })
+            servicosSalao.push({...servico._doc, arquivo })
+        }
+        res.json({ Serviços: servicosSalao })
+    } catch (err) {
+        res.json({ error: true, message: err.message })
+    }
+
 })
 module.exports = router
