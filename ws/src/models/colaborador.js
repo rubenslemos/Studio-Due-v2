@@ -15,7 +15,7 @@ const colaborador = new Schema({
     },
     senha: {
         type: String,
-        required: [true, 'Senha Obrigatória']
+        default: null
     },
     email: {
         type: String,

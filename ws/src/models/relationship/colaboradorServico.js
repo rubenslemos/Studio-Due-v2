@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const servicoColaborador = new Schema({
     servicoId: {
-        type: mongoose.Types.ObjectID,
-        ref: 'Salao',
+        type: mongoose.Types.ObjectId,
+        ref: 'Servico',
         required: true
     },
     colaboradorId: {
-        type: mongoose.Types.ObjectID,
+        type: mongoose.Types.ObjectId,
         ref: 'Colaborador',
         required: true
     },

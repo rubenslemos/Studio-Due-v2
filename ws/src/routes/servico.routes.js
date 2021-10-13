@@ -13,18 +13,19 @@ router.post('/', async(req, res) => {
             const { salaoId, servico } = req.body
             let errors = []
             let arquivos = []
-
             if (req.files && Object.keys(req.files).length > 0) {
                 for (let key of Object.keys(req.files)) {
                     const file = req.files[key]
                     const nameParts = file.name.split('.')
-                    const filename = `${new Date().getTime()}.${nameParts[nameParts.length - 1]}`
-
+                    const filename = `${new Date().getTime()}
+                    .${nameParts[nameParts.length - 1]}`
                     const path = `servicos/${salaoId}/${filename}`
                     const response = await aws.uploadToS3(file, path)
-
                     if (response.error) {
-                        errors.push({ error: true, message: response.message })
+                        errors.push({
+                            error: true,
+                            message: response.message
+                        })
                     } else {
                         arquivos.push(path)
                     }
@@ -43,7 +44,6 @@ router.post('/', async(req, res) => {
                 model: 'Servico',
                 caminho: arquivo
             }))
-
             await Arquivo.Arquivo.insertMany(arquivos)
             res.json({ servico: servicoCadastrado, arquivos })
         } catch (err) {
@@ -59,13 +59,12 @@ router.put('/:id', async(req, res) => {
             const { salaoId, servico } = req.body
             let errors = []
             let arquivos = []
-
             if (req.files && Object.keys(req.files).length > 0) {
                 for (let key of Object.keys(req.files)) {
                     const file = req.files[key]
                     const nameParts = file.name.split('.')
-                    const filename = `${new Date().getTime()}.${nameParts[nameParts.length - 1]}`
-
+                    const filename = `${new Date().getTime()}
+                    .${nameParts[nameParts.length - 1]}`
                     const path = `servicos/${salaoId}/${filename}`
                     const response = await aws.uploadToS3(file, path)
                     if (response.error) {
@@ -81,14 +80,16 @@ router.put('/:id', async(req, res) => {
             }
             //criar serviço
             const jsonServico = JSON.parse(servico)
-            await servicos.Servico.findByIdAndUpdate(req.params.id, jsonServico)
+            await servicos.Servico.findByIdAndUpdate(
+                    req.params.id,
+                    jsonServico
+                )
                 //criar arquivo
             arquivos = arquivos.map(arquivo => ({
                 referenciaId: req.params.id,
                 model: 'Servico',
                 caminho: arquivo
             }))
-
             await Arquivo.Arquivo.insertMany(arquivos)
             res.json({ Servico: "Alterado Com Sucesso" })
         } catch (err) {
@@ -112,15 +113,12 @@ router.post('/delete', async(req, res) => {
 router.delete('/:id', async(req, res) => {
     try {
         const { id } = req.params
-        console.log(id)
         await servicos.Servico.findOneAndUpdate(id, { status: "E" })
         res.json({ Serviço: "Deletado Com Sucesso" })
     } catch (err) {
         res.json({ error: true, message: err.message })
-
     }
 })
-
 router.get('/salao/:salaoId', async(req, res) => {
     try {
         let servicosSalao = []

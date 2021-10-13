@@ -1,1 +1,101 @@
-{"_type":"export","__export_format":4,"__export_date":"2021-10-06T14:46:29.753Z","__export_source":"insomnia.desktop.app:v2021.5.3","resources":[{"_id":"req_6d28c78413a941f9b00de1aa01ffb64b","parentId":"wrk_798acac535904358a2ddcc93ded46844","modified":1633530635106,"created":1633525805878,"url":"http://localhost:8081/servico/615cb77addecdf3f3aabe218","name":"studio","description":"","method":"PUT","body":{"mimeType":"multipart/form-data","params":[{"id":"pair_808cf41501314bd98d1b5cd0bb7e87a7","name":"salaoId","value":"6158e9a63d82455e4242ea38","description":""},{"id":"pair_b4b9344f07464a7f9ac5bceaab873640","name":"servico","value":"{\n\"titulo\":\"Corte Masculino\",\n\"preco\":150\n}","description":"","type":"text","multiline":"application/json"},{"id":"pair_da14ed0a975d4ac9b9d65d8aa5a45c33","name":"123","value":"","description":"","type":"file","fileName":"d:\\Users\\Rubens\\Documents\\GitHub\\Studio-Due-v2\\studio-due-logo-transparent.png"}]},"parameters":[],"headers":[{"name":"Content-Type","value":"multipart/form-data","id":"pair_89a2f5bbe0ba4fc4a95f083bb0c8fe0e"}],"authentication":{},"metaSortKey":-1633525805878,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"wrk_798acac535904358a2ddcc93ded46844","parentId":null,"modified":1633525347307,"created":1633525347307,"name":"studio","description":"","scope":"collection","_type":"workspace"},{"_id":"env_57431846442e576289b3849a82b0952f5f955ecd","parentId":"wrk_798acac535904358a2ddcc93ded46844","modified":1633525347315,"created":1633525347315,"name":"Base Environment","data":{},"dataPropertyOrder":null,"color":null,"isPrivate":false,"metaSortKey":1633525347315,"_type":"environment"},{"_id":"jar_57431846442e576289b3849a82b0952f5f955ecd","parentId":"wrk_798acac535904358a2ddcc93ded46844","modified":1633525347319,"created":1633525347319,"name":"Default Jar","cookies":[],"_type":"cookie_jar"},{"_id":"spc_ec1d51b40bfa4c9098e17acbc32876b7","parentId":"wrk_798acac535904358a2ddcc93ded46844","modified":1633525347308,"created":1633525347308,"fileName":"studio","contents":"","contentType":"yaml","_type":"api_spec"}]}
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2021-10-06T14:46:29.753Z",
+    "__export_source": "insomnia.desktop.app:v2021.5.3",
+    "resources": [{
+            "_id": "req_6d28c78413a941f9b00de1aa01ffb64b",
+            "parentId": "wrk_798acac535904358a2ddcc93ded46844",
+            "modified": 1633530635106,
+            "created": 1633525805878,
+            "url": "http://localhost:8081/servico/615cb77addecdf3f3aabe218",
+            "name": "studio",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "multipart/form-data",
+                "params": [{
+                        "id": "pair_808cf41501314bd98d1b5cd0bb7e87a7",
+                        "name": "salaoId",
+                        "value": "6158e9a63d82455e4242ea38",
+                        "description": ""
+                    },
+                    {
+                        "id": "pair_b4b9344f07464a7f9ac5bceaab873640",
+                        "name": "servico",
+                        "value": "{\n\"titulo\":\"Corte Masculino\",\n\"preco\":150\n}",
+                        "description": "",
+                        "type": "text",
+                        "multiline": "application/json"
+                    },
+                    {
+                        "id": "pair_da14ed0a975d4ac9b9d65d8aa5a45c33",
+                        "name": "123",
+                        "value": "",
+                        "description": "",
+                        "type": "file",
+                        "fileName": "d:\\Users\\Rubens\\Documents\\GitHub\\Studio-Due-v2\\studio-due-logo-transparent.png"
+                    }
+                ]
+            },
+            "parameters": [],
+            "headers": [{
+                "name": "Content-Type",
+                "value": "multipart/form-data",
+                "id": "pair_89a2f5bbe0ba4fc4a95f083bb0c8fe0e"
+            }],
+            "authentication": {},
+            "metaSortKey": -1633525805878,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "wrk_798acac535904358a2ddcc93ded46844",
+            "parentId": null,
+            "modified": 1633525347307,
+            "created": 1633525347307,
+            "name": "studio",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "env_57431846442e576289b3849a82b0952f5f955ecd",
+            "parentId": "wrk_798acac535904358a2ddcc93ded46844",
+            "modified": 1633525347315,
+            "created": 1633525347315,
+            "name": "Base Environment",
+            "data": {},
+            "dataPropertyOrder": null,
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1633525347315,
+            "_type": "environment"
+        },
+        {
+            "_id": "jar_57431846442e576289b3849a82b0952f5f955ecd",
+            "parentId": "wrk_798acac535904358a2ddcc93ded46844",
+            "modified": 1633525347319,
+            "created": 1633525347319,
+            "name": "Default Jar",
+            "cookies": [],
+            "_type": "cookie_jar"
+        },
+        {
+            "_id": "spc_ec1d51b40bfa4c9098e17acbc32876b7",
+            "parentId": "wrk_798acac535904358a2ddcc93ded46844",
+            "modified": 1633525347308,
+            "created": 1633525347308,
+            "fileName": "studio",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}
