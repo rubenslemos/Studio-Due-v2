@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const servicoColaborador = new Schema({
+const colaboradorServico = new Schema({
     servicoId: {
         type: mongoose.Types.ObjectId,
         ref: 'Servico',
@@ -22,4 +22,4 @@ const servicoColaborador = new Schema({
         default: Date.now,
     },
 })
-module.exports = mongoose.model('ServicoColaborador', servicoColaborador)
+module.exports = mongoose.model('colaboradorServico', colaboradorServico)

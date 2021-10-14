@@ -139,6 +139,7 @@ router.post('/filter', async(req, res) => {
 router.get('/salao/:salaoId', async(req, res) => {
     try {
         const { salaoId } = req.params
+        let listaColaboradores = []
             //recuperar vinculos
         const salaoColaboradores = await salaoColaborador.find({
                 salaoId,
@@ -146,8 +147,16 @@ router.get('/salao/:salaoId', async(req, res) => {
             })
             .populate('colaboradorId')
             .select('colaboradorId dataCadastro status')
-
-        res.json({ salaoColaboradores })
+        for (let vinculos of salaoColaboradores) {
+            const especialidades = await colaboradorServico.find({
+                colaboradorid: vinculos.colaboradorId._id,
+            })
+            listaColaboradores.push({
+                ...vinculos._doc,
+                especialidades
+            })
+        }
+        res.json({ listaColaboradores })
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
