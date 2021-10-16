@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-const salaoColaborador = new Schema({
+const salaoCliente = new Schema({
     salaoId: {
-        type: mongoose.Types.ObjectID,
+        type: mongoose.Types.ObjectId,
         ref: 'Salao',
         required: true
     },
-    clienteID: {
-        type: mongoose.Types.ObjectID,
+    clienteId: {
+        type: mongoose.Types.ObjectId,
         ref: 'Cliente',
         required: true
     },
@@ -22,4 +22,4 @@ const salaoColaborador = new Schema({
         default: Date.now,
     },
 })
-module.exports = mongoose.model('SalaoColaborador', salaoColaborador)
+module.exports = mongoose.model('SalaoCliente', salaoCliente)

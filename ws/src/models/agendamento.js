@@ -1,23 +1,23 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const agendamento = new Schema({
-    clienteID: {
-        type: mongoose.Types.ObjectID,
+    clienteId: {
+        type: mongoose.Types.ObjectId,
         ref: 'Cliente',
         required: true
     },
     salaoId: {
-        type: mongoose.Types.ObjectID,
+        type: mongoose.Types.ObjectId,
         ref: 'Salao',
         required: true
     },
     servicoId: {
-        type: mongoose.Types.ObjectID,
+        type: mongoose.Types.ObjectId,
         ref: 'Servico',
         required: true
     },
     colaboradorId: {
-        type: mongoose.Types.ObjectID,
+        type: mongoose.Types.ObjectId,
         ref: 'Colaborador',
         required: true
     },

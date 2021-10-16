@@ -30,6 +30,9 @@ const salao = new Schema({
         tipo: String,
         coordinates: Array
     },
+    recipientId: {
+        type: String
+    },
     dataCadastro: {
         type: Date,
         default: Date.now,

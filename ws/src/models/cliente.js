@@ -14,7 +14,7 @@ const cliente = new Schema({
         default: null
     },
     telefone: {
-        type: String,
+        type: [String],
         required: [true, 'Telefone Obrigatório']
     },
     foto: {
@@ -59,7 +59,7 @@ const cliente = new Schema({
             required: [true, 'CEP Obrigatório']
         },
         numero: {
-            type: Number,
+            type: String,
             required: [true, 'Número do imóvel é Obrigatório']
         },
         bairro: {
@@ -76,6 +76,14 @@ const cliente = new Schema({
             required: [true, 'País é Obrigatório'],
             default: 'Brasil'
         },
+    },
+    nascimento: {
+        type: Date,
+        required: [true, 'Data de Aniversário Obrigatória'],
+        default: Date.now
+    },
+    pagadorId: {
+        type: String
     },
     dataCadastro: {
         type: Date,

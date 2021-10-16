@@ -145,7 +145,7 @@ router.get('/salao/:salaoId', async(req, res) => {
                 salaoId,
                 status: { $ne: 'E' }
             })
-            .populate('colaboradorId')
+            .populate({ path: 'colaboradorId', select: '-senha -recipientId' })
             .select('colaboradorId dataCadastro status')
         for (let vinculos of salaoColaboradores) {
             const especialidades = await colaboradorServico.find({
@@ -156,7 +156,9 @@ router.get('/salao/:salaoId', async(req, res) => {
                 especialidades
             })
         }
-        res.json({ listaColaboradores })
+        res.json({
+            Colaboradores: listaColaboradores
+        })
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
