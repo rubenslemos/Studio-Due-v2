@@ -15,7 +15,7 @@ const servico = new Schema({
         required: [true, 'Preço Obrigatório']
     },
     duracao: {
-        type: Number, // tempo em minutos q dura o serviço
+        type: Date, // tempo em minutos q dura o serviço
         required: [true, 'Duração é Obrigatório']
     },
     comissao: {
