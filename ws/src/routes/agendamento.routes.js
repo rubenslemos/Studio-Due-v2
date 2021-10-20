@@ -23,13 +23,17 @@ router.post('/', async(req, res) => {
     try {
         const { salaoId, clienteId, colaboradorId, servicoId } = req.body
             //recuperar o cliente
-        const clientes = await cliente.findById(clienteId).select('nome endereco pagadorId')
+        const clientes = await cliente.findById(clienteId).select(
+                'nome endereco pagadorId')
             //recuperar o salão
-        const saloes = await salao.findById(salaoId).select('recipientId')
+        const saloes = await salao.findById(salaoId)
+            .select('recipientId')
             //recuperar o serviço
-        const servicos = await servico.Servico.findById(servicoId).select('preco titulo comissao')
+        const servicos = await servico.Servico.findById(servicoId)
+            .select('preco titulo comissao')
             //recuperar o colaborador
-        const colaboradores = await colaborador.findById(colaboradorId).select('recipientId')
+        const colaboradores = await colaborador.findById(colaboradorId)
+            .select('recipientId')
             //recuperar o Agendamento
         let novoAgendamento = null
             //verificar existência do agendamento
@@ -53,7 +57,7 @@ router.post('/', async(req, res) => {
                 //preço total
                 amount: precoFinal,
                 //Dados do Cartão
-                card_number: "4111111111111111",
+                card_number: "4111 1111 1111 1111",
                 card_holder_name: "Morpheus Fishburne",
                 card_expiration_date: "1123",
                 card_cvv: "123",
