@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+:root{
+  --headerBg: #ADB5BD;
+  --headerFnt: #6C757D;
+  --sidebarBg: #495057;
+  --sidebarFnt: #adb5bd;
+  --sidebarFntSel: #212529;
+  --titulo: #E9ECEF;
+  --branco: #F8F9FA;
+  --brancoSujo: #DEE2E6;
+  --sidebarFnt50: #adb5bd80;
+  --cinzaClaro: #CED4DA;
+  --CinzaChumbo: #343A40;
+  --success: #38B000;
+  --fail: #BA181B;
+  --fontPrimary: 'Ubuntu', sans-serif;
+}
+#root{
+  height: 100%;
+  width: 100%;
+  position:fixed;
+  font-family: var(--fontPrimary);
+}
+header{
+ background-color: var(--headerBg);
+ color: var(--headerFnt);
+ font-weight: 500;
+}
+header > div{
+  cursor: pointer;
+  transition: 0.5s;
+  padding: 10px 20px;
+  text-align: right;
+}
+header > div:hover{
+  background-color: var(--titulo);
+  transition: 0.5s;
+  
+}
+header img{
+  width: 60px;
+  border-radius: 100%;
+  margin-left: 15px;
+}
+header span:not(.mdi){
+  margin-bottom: -10px;
+  font-size: 25px;
+  color: var(--sidebarBg);
+}
+
+header span.mdi{
+  font-size: 25px;
+  margin-left: 5px;
+  color: var(--sidebarBg);
+}
+header small{
+  display:block;
+  margin-top: -8px;
+  font-size: 15px;
+}
+sidebar{
+  background-color: black;
+  margin:0px;
+  /* display:flex;
+  flex-direction: column;
+  align-items: start; */
+}
+
+li{
+  margin: 0px;
+  list-style: none;
+  font-size: 20px;
+  color: var(--sidebarFnt);
+}
+li text{
+  margin-left: 10px;
+  font-family: var(--fontPrimary) ;
+  text-decoration: none;
+}
+li:hover{
+  color: rgb(0, 139, 253);
+  transition: 0.5s;
+}
+a {
+  display:flex;
+  padding: 10px 0px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+li.active{
+  color: rgb(0, 139, 253);
+}

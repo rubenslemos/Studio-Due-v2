@@ -3,12 +3,17 @@
         "ADPX",
         "AKIA",
         "colaboradorid",
+        "consts",
         "dsphare",
+        "immer",
         "Middlewares",
         "pagarme",
         "Pingu",
         "postback",
+        "rsuite",
         "serv",
         "zipcode"
-    ]
+    ],
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.fontFamily": "JetBrains Mono"
 }
