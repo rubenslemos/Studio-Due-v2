@@ -1,33 +1,21 @@
-import clientes from '../../clientes'
 import { Table } from 'rsuite'
 const {Column, HeaderCell, Cell} = Table
-const Tabela = () => {
+const Tabela = ({ data, config, actions, content, onRowClick}) => {
   return (
     <Table
-    height={400}
-    data={clientes}
-    onRowClick={data => {
-      console.log(data);
-  }}>
-  <Column width={70} align="center" fixed>
-    <HeaderCell>Id</HeaderCell>
-    <Cell dataKey="id" />
-  </Column>
-  <Column width={200} fixed>
-    <HeaderCell>Nome</HeaderCell>
-    <Cell dataKey="firstName" />
-  </Column>
-  <Column width={300}>
-    <HeaderCell>Email</HeaderCell>
-    <Cell dataKey="email" />
-  </Column>
-  <Column width={200}>
-   <HeaderCell>City</HeaderCell>
-   <Cell dataKey="city" />
-  </Column>
-  <Column width={200}>
-   <HeaderCell>Street</HeaderCell>
-   <Cell dataKey="street" />
+    height={500}
+    data={data}
+    onRowClick={(item)=>onRowClick(item)}
+    >
+  {config.map(c => <Column flexGrow={!c.width ? 1 : 0} width={c.width} fixed= {c.fixed}>
+    <HeaderCell>{c.label}</HeaderCell>
+    {!c.content ? (<Cell dataKey={c.key} />) : (<Cell>{(item) => c.content(item)}</Cell>)}
+  </Column>)}
+  <Column width={150} fixed="right">
+    <HeaderCell></HeaderCell>
+    <Cell>
+    {(item) => actions(item)}
+    </Cell>
   </Column>
   </Table>
   )

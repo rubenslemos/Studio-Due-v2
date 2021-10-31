@@ -1,12 +1,20 @@
+import produce from 'immer'
+import types from './types'
 const INITIAL_STATE = {
-  agendamentos: []
+  clientes: []
 }
-function agendamento(state = INITIAL_STATE, action) {
+function cliente(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case '@agendamento/ALL':{
-      ////
+    case types.UPDATE_CLIENTES:{
+      return produce(state, (draft) => {
+        draft = {
+          ...draft,
+          ...action.payload
+        }
+        return draft
+      })
     }
     default: return state
   }
 }
-export default agendamento
+export default cliente
