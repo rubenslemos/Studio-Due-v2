@@ -18,8 +18,7 @@ const cliente = new Schema({
         required: [true, 'Telefone Obrigatório']
     },
     foto: {
-        type: String,
-        required: [true, 'Foto Obrigatória']
+        type: String
     },
     status: {
         type: String,

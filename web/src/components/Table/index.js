@@ -1,8 +1,9 @@
 import { Table } from 'rsuite'
 const {Column, HeaderCell, Cell} = Table
-const Tabela = ({ data, config, actions, content, onRowClick}) => {
+const Tabela = ({ data, config, actions, content, loading, onRowClick}) => {
   return (
     <Table
+    loading={loading}
     height={500}
     data={data}
     onRowClick={(item)=>onRowClick(item)}

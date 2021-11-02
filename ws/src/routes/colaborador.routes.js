@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
+const moment = require('moment')
 const pagarme = require('../services/pagarme')
 const Colaborador = require('../models/colaborador')
 const salaoColaborador = require('../models/relationship/salaoColaborador')
@@ -141,23 +142,30 @@ router.get('/salao/:salaoId', async(req, res) => {
         const { salaoId } = req.params
         let listaColaboradores = []
             //recuperar vinculos
-        const salaoColaboradores = await salaoColaborador.find({
+        const colaboradores = await salaoColaborador.find({
                 salaoId,
                 status: { $ne: 'E' }
             })
-            .populate({ path: 'colaboradorId', select: '-senha -recipientId' })
+            .populate('colaboradorId')
             .select('colaboradorId dataCadastro status')
-        for (let vinculos of salaoColaboradores) {
+        for (let colaborador of colaboradores) {
             const especialidades = await colaboradorServico.find({
-                colaboradorid: vinculos.colaboradorId._id,
+                colaboradorId: colaborador.colaboradorId._id,
             })
             listaColaboradores.push({
-                ...vinculos._doc,
-                especialidades
+                ...colaborador._doc,
+                especialidades: especialidades.map((e)=> e.servicoId)
             })
         }
         res.json({
-            Colaboradores: listaColaboradores
+            error: false,
+            Colaboradores: listaColaboradores.map((c)=> ({
+                ...c.colaboradorId._doc,
+                vinculoId: c._id,
+                vinculo: c.status,
+                especialidades: c.especialidades,
+                dataCadastro:moment(c.dataCadastro).format('DD/MM/YYYY')
+            }))
         })
     } catch (err) {
         res.json({ error: true, message: err.message })

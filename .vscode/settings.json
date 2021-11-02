@@ -15,5 +15,8 @@
         "zipcode"
     ],
     "editor.formatOnSaveMode": "modificationsIfAvailable",
-    "editor.fontFamily": "JetBrains Mono"
+    "editor.fontFamily": "JetBrains Mono",
+    "vscode-janus-debug.uploadOnSave": [
+        "index"
+    ]
 }

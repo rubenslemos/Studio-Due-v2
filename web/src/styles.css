@@ -109,3 +109,32 @@ li.active{
   background-color: var(--headerBg);
   transition: 0.5s;
 }
+.drawer{
+ color: var(--CinzaChumbo);
+ font-family: var(--fontPrimary);
+ font-weight: 500;
+}
+.drawer h2{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -18px;
+}
+.drawer p {
+  margin-top: 15px;
+  margin-bottom: 3px;
+  margin-left: 5px;
+  margin-left: 5px;
+}
+
+.drawer button{
+  margin: 0;
+  margin-left: 5px;
+  padding: 8px 10px;
+}
+.save{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
