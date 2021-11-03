@@ -16,8 +16,8 @@ import RemindFillIcon from '@rsuite/icons/RemindFill'
 const Colaboradores = () => {
   
   const dispatch = useDispatch()
-  const {  colaborador, colaboradores, form, behavior, components } = useSelector((state) => state.Colaboradores)
-  
+  const { colaborador, colaboradores, form, behavior, components } = useSelector((state) => state.Colaboradores)
+
   const setComponent = (component, state) => {
     dispatch(updateColaborador({
       components: {
@@ -26,11 +26,10 @@ const Colaboradores = () => {
       }
     }))
   }
-
   const setColaborador = (key, value) => {
     dispatch(updateColaborador({
       colaborador: {
-        ...colaborador,
+        colaborador,
         [key]: value
       }
     }))
@@ -41,21 +40,21 @@ const Colaboradores = () => {
         colaborador,
         behavior: 'update',
       })
-    );
-    setComponent('drawer', true);
-  };
-  const remove = () => {
-    dispatch(unlinkColaborador())
-  }
-  const save = () => { 
-    dispatch(addColaborador())
-  }
-  useEffect(() => {
-    dispatch(allColaboradores())
-  },[dispatch])
-  return (
-    console.log('colaborador: ', colaborador),
-    console.log('Colaboradores: ', colaboradores),
+      );
+      setComponent('drawer', true);
+    };
+    const remove = () => {
+      dispatch(unlinkColaborador())
+    }
+    const save = () => { 
+      dispatch(addColaborador())
+    }
+    useEffect(() => {
+      dispatch(allColaboradores())
+    },[dispatch])
+    console.log('colaborador: ', colaborador)
+    console.log('Colaboradores: ', colaboradores)
+    return (
     <div className="col p-5 overflow-auto h-100">
       <Drawer 
       open={components.drawer} 

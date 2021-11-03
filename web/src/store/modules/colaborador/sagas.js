@@ -36,7 +36,8 @@ export function* allColaboradores (){
     }))
     alert(err.message)
   }
-}export function* filterColaboradores (){ 
+}
+export function* filterColaboradores (){ 
   const { form, colaborador } = yield select(state => state.Colaboradores)
   try {
     yield put(updateColaborador({
