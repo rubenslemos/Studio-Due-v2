@@ -40,6 +40,7 @@ function colaborador(state = INITIAL_STATE, action) {
           ...draft,
           ...action.payload
         }
+
         return draft
       })
     }

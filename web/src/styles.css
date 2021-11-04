@@ -138,3 +138,8 @@ li.active{
   align-items: center;
   width: 100%;
 }
+.bt{
+  display:flex;
+  justify-content: center;
+  align-items: right;
+}

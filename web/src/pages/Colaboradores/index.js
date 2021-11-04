@@ -52,8 +52,6 @@ const Colaboradores = () => {
     useEffect(() => {
       dispatch(allColaboradores())
     },[dispatch])
-    console.log('colaborador: ', colaborador)
-    console.log('Colaboradores: ', colaboradores)
     return (
     <div className="col p-5 overflow-auto h-100">
       <Drawer 
@@ -71,7 +69,7 @@ const Colaboradores = () => {
                 <input
                   type="email"
                   class="form-control"
-                  placeholder="E-mail do colaborador"
+                  placeholder={behavior === 'create' ? "E-mail do colaborador" : colaborador.email}
                   disabled={behavior !== 'create'}
                   onChange={(e) => {
                     setColaborador('email', e.target.value);
@@ -111,7 +109,7 @@ const Colaboradores = () => {
             </div>
           </div>
           <div className="form-group col-6">
-            <p>Telefone</p>
+            <p>Telefone/WhastApp</p>
             <div className="input-group">
               <input 
                 type="text" 
@@ -122,8 +120,23 @@ const Colaboradores = () => {
                 onChange={(e) => setColaborador('telefone', e.target.value)}
                 />
             </div>
+          </div>          
+          <div className="form-group col-4">
+            <p>Status</p>
+            
+              <select 
+                className="form-control"
+                disabled={form.disabled && behavior === 'create'}
+                placeholder="Telefone colaborador"
+                value={colaborador.vinculo}
+                onChange={(e) => setColaborador('vinculo', e.target.value)}
+               >
+                <option value="A">Ativo</option>
+                <option value="I">Inativo</option>
+              </select>
+            
           </div>
-          <div className="form-group col-6">
+          <div className="form-group col-4">
             <p>Data Nascimento</p>
             <div className="input-group">
               <input 
@@ -137,7 +150,7 @@ const Colaboradores = () => {
                 />
             </div>
  	        </div>
-          <div className="form-group col-6">
+          <div className="form-group col-4">
             <p>Sexo</p>
             <select
               disabled={form.disabled}
@@ -177,7 +190,7 @@ const Colaboradores = () => {
         <Modal.Body
         style={{
           fontFamily: 'Ubuntu',
-          fontSize: 16,
+          fontSize: 15,
           fontWeight: '500'
         }}
         >
@@ -241,48 +254,54 @@ const Colaboradores = () => {
            data={colaboradores}
            config={[
              { 
-               label: 'Data Cadastro',
-               key: 'dataCadastro',
-               width: 100,
-               fixed: true,
-               content: (item) => moment(item.dataCadastro).format('DD/MM/YYYY')
-              },
-              { 
-                label: 'Status',
-                key: 'status',
-                width: 80,
-                fixed: true,
-                content: (item) => item.status === "A" ? "Ativo" : "Inativo"
-              },
-              { 
-                label: 'Sexo',
-                key: 'sexo',
-                content: (item) => item.sexo === "M" ? "Masculino" : "Feminino",
-                width: 100,
-                fixed: true
-             },
-             { 
                label: 'Nome',
                key: 'nome',
                width: 150,
                fixed: true,
               },
-             { 
-               label: 'E-mail',
-               key: 'email',
-              width: 300,
-              fixed: true,
-             },
-             { 
+              { 
+                label: 'E-mail',
+                key: 'email',
+               width: 300,
+               fixed: true,
+              },
+              {
               label: 'Telefone',
               key: 'telefone',
               width: 150,
               fixed: true,
-            }
+            },
+            { 
+              label: 'Sexo',
+              key: 'sexo',
+              content: (colaboradores) => colaboradores.sexo === "M" ? "Masculino" : "Feminino",
+              width: 100,
+              fixed: true
+           },
+           {
+            label: 'Especialidades',
+            key: 'especialidades',
+            content: (especialidades) => especialidades.length,
+            sortable: true,
+          },
+           { 
+             label: 'Status',
+             key: 'status',
+             width: 80,
+             fixed: true,
+             content: (colaboradores) => colaboradores.status === "A" ? "Ativo" : "Inativo"
+           },
+             { 
+               label: 'Data Cadastro',
+               key: 'dataCadastro',
+               width: 100,
+               fixed: true,
+               content: (colaboradores) => moment(colaboradores.dataCadastro).format('DD/MM/YYYY')
+              }
           ]}
           actions={(Colaboradores) => (
             <button 
-              className="button"
+              className="button bt"
             >
               Mais Informações
             </button>

@@ -97,7 +97,7 @@ router.post('/', async(req, res) => {
 })
 router.put('/:colaboradorId', async(req, res) => {
     try {
-        const { vinculo, vinculoId, servicos } = req.body
+        const { vinculo, vinculoId, especialidades } = req.body
         const { colaboradorId } = req.params
             //vinculo
         await salaoColaborador.findByIdAndUpdate(
@@ -109,7 +109,7 @@ router.put('/:colaboradorId', async(req, res) => {
             colaboradorId
         })
         await colaboradorServico.insertMany(
-            servicos.map((servicoId) => ({
+            especialidades.map((servicoId) => ({
                 servicoId,
                 colaboradorId
             }))
@@ -139,30 +139,32 @@ router.post('/filter', async(req, res) => {
 })
 router.get('/salao/:salaoId', async(req, res) => {
     try {
-        const { salaoId } = req.params
-        let listaColaboradores = []
-            //recuperar vinculos
+        const { salaoId } = req.params;
+        let listaColaboradores = [];
+    
         const colaboradores = await salaoColaborador.find({
-                salaoId,
-                status: { $ne: 'E' }
-            })
-            .populate('colaboradorId')
-            .select('colaboradorId dataCadastro status')
+          salaoId,
+          status: { $ne: 'E' },
+        })
+          .populate('colaboradorId')
+          .select('colaboradorId dataCadastro status');
+    
         for (let colaborador of colaboradores) {
-            const especialidades = await colaboradorServico.find({
-                colaborador: colaborador.colaboradorId._doc,
-            })
-            listaColaboradores.push({
-                colaborador: colaborador.colaboradorId,
-                especialidades
-            })
-            console.log(listaColaboradores)
+          const especialidades = await colaboradorServico.find({
+            colaboradorId: colaborador.colaboradorId._id,
+          });
+    
+          listaColaboradores.push({
+            ...colaborador.colaboradorId._doc,
+            especialidades: especialidades.map((e) => e.servicoId),
+          });
         }
         res.json({
-            Colaboradores: listaColaboradores
-        })
-    } catch (err) {
-        res.json({ error: true, message: err.message })
-    }
-})
+          error: false,
+          Colaboradores: listaColaboradores
+        });
+      } catch (err) {
+        res.json({ error: true, message: err.message });
+      }
+    })
 module.exports = router
