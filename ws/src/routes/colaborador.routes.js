@@ -152,13 +152,14 @@ router.get('/salao/:salaoId', async(req, res) => {
         for (let colaborador of colaboradores) {
           const especialidades = await colaboradorServico.find({
             colaboradorId: colaborador.colaboradorId._id,
-          });
+          })
     
           listaColaboradores.push({
             ...colaborador.colaboradorId._doc,
-            especialidades: especialidades.map((e) => e.servicoId),
+            especialidades: especialidades.map((e) => e.servicoId)
           });
         }
+        console.log(listaColaboradores[1].contaBancaria)
         res.json({
           error: false,
           Colaboradores: listaColaboradores

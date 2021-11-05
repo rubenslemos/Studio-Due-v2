@@ -18,14 +18,14 @@ const INITIAL_STATE = {
     nome: '',
     telefone: '',
     dataNascimento: '',
+    especialidades:[],
     sexo: 'M',
     vinculo: "A",
-    especialidades: [],
-    contaBancaria: {
+    contaBancaria:{
     	titular: '',
     	cpfCnpj: '',
 	    Banco: '',
-    	TipoConta: 'conta_corrente',
+    	TipoConta: '',
     	agencia: '',
     	numero: '',
     	dv: ''

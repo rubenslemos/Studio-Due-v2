@@ -65,9 +65,9 @@ export function* filterColaboradores (){
       return false
     }
 
-    if (res.colaboradores.length > 0) {
+    if (res.Colaboradores.length > 0) {
       yield put(updateColaborador({
-        colaborador: res.colaboradores[0],
+        colaborador: res.Colaboradores[0],
         form: {
           ...form,
           filtering: false,
@@ -83,7 +83,7 @@ export function* filterColaboradores (){
     }))
     }
     yield put(updateColaborador({
-      colaboradores: res.colaboradores
+      colaboradores: res.Colaboradores
     }))
   } catch (err) {
     // eslint-disable-next-line no-unused-expressions

@@ -9,14 +9,16 @@ import {
   filterColaboradores, 
   addColaborador, 
   resetColaborador,
-  unlinkColaborador
+  unlinkColaborador,
+  allServicos
 } from '../../store/modules/colaborador/actions'
-import { Drawer, Modal, Button } from 'rsuite'
+import { Drawer, Modal, Button, TagPicker, SelectPicker } from 'rsuite'
 import RemindFillIcon from '@rsuite/icons/RemindFill'
+import bancos from '../../data/bancos.json'
 const Colaboradores = () => {
   
   const dispatch = useDispatch()
-  const { colaborador, colaboradores, form, behavior, components } = useSelector((state) => state.Colaboradores)
+  const { colaborador, colaboradores, form, behavior, components, servicos } = useSelector((state) => state.Colaboradores)
 
   const setComponent = (component, state) => {
     dispatch(updateColaborador({
@@ -34,6 +36,19 @@ const Colaboradores = () => {
       }
     }))
   }
+
+  const setContaBancaria = (key, value) => {
+    dispatch(
+      updateColaborador({
+        colaborador: {
+          colaborador,
+          contaBancaria: { ...colaborador.contaBancaria, [key]: value },
+        },
+      })
+    );
+  };
+    console.log (colaborador.contaBancaria)
+
   const onRowClick = (colaborador) => {
     dispatch(
       updateColaborador({
@@ -51,8 +66,10 @@ const Colaboradores = () => {
     }
     useEffect(() => {
       dispatch(allColaboradores())
+      dispatch(allServicos())
     },[dispatch])
-    return (
+    
+   return (
     <div className="col p-5 overflow-auto h-100">
       <Drawer 
       open={components.drawer} 
@@ -162,9 +179,109 @@ const Colaboradores = () => {
             <option value="F">Feminino</option>
             </select>  
           </div>
-          
+          <div className="col-12">
+            <p>Especialidades</p>
+            <TagPicker
+              size="lg"
+              block
+              data={servicos}
+              disable={form.disabled && behavior === 'create'}
+              value={colaborador.especialidades}
+              onChange= {(especialidade) => setColaborador('especialidades', especialidade)}
+            />
+          </div>
+          <div className="row">
+            <div className="form-group col-6">
+              <p>Titular da Conta</p>
+              <input
+                type="text"
+                className="form-control"
+                placeholder='Titular da Conta'
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.titular}
+                onChange={(e) => setContaBancaria('titular', e.target.value)}
+                />
+            </div>
+            <div className="form-group col-6">
+              <p>CPF/CNPJ</p>
+              <input
+                type="text"
+                className="form-control"
+                placeholder='CPF/CNPJ do Titular'
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.cpfCnpj}
+                onChange={(e) => setContaBancaria('cpfCnpj', e.target.value)}
+                />
+            </div>
+            <div className="form-group col-6">
+              <p>Banco</p>
+              <SelectPicker
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.banco}
+                block
+                placeholder={colaborador.contaBancaria.banco === '' && null ? "Bancos" : colaborador.contaBancaria.banco}
+                data={bancos}
+                onChange={(value) => setContaBancaria('banco', value)}
+                size='lg'
+                />
+            </div>
+            <div className="form-group col-6">
+            <p>Tipo de Conta</p>
+            <select
+              disabled={form.disabled}
+              className="form-control"
+              value={colaborador.contaBancaria.tipo}
+              onChange={(e) => setColaborador('tipo', e.target.value)}
+              >
+            <option value="conta_corrente">Conta Corrente</option>
+            <option value="conta_poupanca">Conta Poupança</option>
+            </select>  
+          </div>
+          <div className="form-group col-5">
+              <p>Agência</p>
+              <input
+                type="text"
+                className="form-control"
+                placeholder='Agência bancaria'
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.agencia}
+                onChange={(e) => setContaBancaria('agencia', e.target.value)}
+                />
+            </div>
+            <div className="form-group col-4">
+              <p>Número da Conta</p>
+              <input
+                type="text"
+                className="form-control"
+                placeholder='Conta'
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.numero}
+                onChange={(e) => setContaBancaria('numero', e.target.value)}
+                />
+            </div>            
+            <div className="form-group col-3">
+              <p>Dígito</p>
+              <input
+                type="text"
+                className="form-control"
+                placeholder='Dígito'
+                disabled={form.disabled}
+                value={colaborador.contaBancaria.dv}
+                onChange={(e) => setContaBancaria('dv', e.target.value)}
+                />
+            </div>
+          </div>
             <div className="form-group col-12">
               <p></p>
+              <button
+                className='button mx-auto save'
+                loading={form.saving}
+                onClick={() => save()}
+              >
+                {behavior === 'create' ? "Salvar" : "Atualizar"} Colaborador
+              </button> 
+            <p></p>
+            {behavior ==='update' && (
             <button
             className="button mx-auto save"
             loading={form.saving}
@@ -176,8 +293,8 @@ const Colaboradores = () => {
               }
             }}
             >
-            {behavior === 'create' ? 'Salvar' : 'Remover'} colaborador
-          </button>
+            Remover colaborador
+          </button>)}
             </div>
           </div>
         </Drawer.Body>
@@ -280,8 +397,8 @@ const Colaboradores = () => {
            },
            {
             label: 'Especialidades',
-            key: 'especialidades',
-            content: (especialidades) => especialidades.length,
+            key: 'label',
+            content: (especialidades) =>( colaboradores.especialidades === servicos.value ? servicos.label : 'Cadastre sua(s) especialidade(s)'), 
             sortable: true,
           },
            { 

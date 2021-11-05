@@ -133,7 +133,8 @@ router.get('/salao/:salaoId', async(req, res) => {
             })
             servicosSalao.push({...servico._doc, arquivo })
         }
-        res.json({ Serviços: servicosSalao })
+        res.json({ servicos: servicosSalao })
+        console.log(servicosSalao)
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
