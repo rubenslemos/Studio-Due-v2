@@ -68,7 +68,6 @@ const Colaboradores = () => {
       dispatch(allColaboradores())
       dispatch(allServicos())
     },[dispatch])
-    
    return (
     <div className="col p-5 overflow-auto h-100">
       <Drawer 
@@ -139,7 +138,7 @@ const Colaboradores = () => {
             </div>
           </div>          
           <div className="form-group col-4">
-            <p>Status</p>
+            <p>Vinculo</p>
             
               <select 
                 className="form-control"
@@ -219,7 +218,6 @@ const Colaboradores = () => {
                 disabled={false}
                 value={colaborador.contaBancaria.banco}
                 block
-                placeholder={colaborador.contaBancaria.banco}
                 data={bancos}
                 onChange={(value) => setContaBancaria('banco', value)}
                 size='lg'
@@ -397,16 +395,16 @@ const Colaboradores = () => {
            },
            {
             label: 'Especialidades',
-            key: 'label',
-            content: (especialidades) =>( colaboradores.especialidades === servicos.value ? servicos.label : 'Cadastre sua(s) especialidade(s)'), 
+            key: 'especialidades',
+            content: (especialidades) => especialidades.length,
             sortable: true,
           },
            { 
-             label: 'Status',
-             key: 'status',
+             label: 'Vinculo',
+             key: 'vinculo',
              width: 80,
              fixed: true,
-             content: (colaboradores) => colaboradores.status === "A" ? "Ativo" : "Inativo"
+             content: (vinculo) => colaborador.vinculo === "A" ? "Ativo" : "Inativo"
            },
              { 
                label: 'Data Cadastro',

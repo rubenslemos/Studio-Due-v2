@@ -65,9 +65,9 @@ export function* filterColaboradores (){
       return false
     }
 
-    if (res.Colaboradores.length > 0) {
+    if (res.colaboradores.length > 0) {
       yield put(updateColaborador({
-        colaborador: res.Colaboradores[0],
+        colaborador: res.colaboradores[0],
         form: {
           ...form,
           filtering: false,
@@ -83,7 +83,7 @@ export function* filterColaboradores (){
     }))
     }
     yield put(updateColaborador({
-      colaboradores: res.Colaboradores
+      colaboradores: res.colaboradores
     }))
   } catch (err) {
     // eslint-disable-next-line no-unused-expressions
@@ -97,7 +97,7 @@ export function* filterColaboradores (){
   }
 }
 export function* addColaborador (){ 
-  const { form, colaborador, components } = yield select(state => state.Colaboradores)
+  const { form, colaborador, components, behavior} = yield select(state => state.Colaboradores)
   try {
     yield put(updateColaborador({
       form: {
@@ -105,15 +105,21 @@ export function* addColaborador (){
         saving: true
       }
     }))
-
-    const {data: res} = yield call(
-      api.post,
-      `/colaborador`,
-       {
+    let res = {}
+    if ( behavior === 'create'){
+      const response = yield call( api.post, `/colaborador`, { 
         colaborador,
         salaoId: consts.salaoId,
-      }
-      )
+      })
+      res = response.data
+    } else {
+      const response = yield call( api.put, `/colaborador/${colaborador._id}`, { 
+        vinculo: colaborador.vinculo,
+        vinculoId: colaborador.vinculoId,
+        especialidades: colaborador.especialidades
+      })
+      res = response.data
+    }
 
       yield put(updateColaborador({
         form: {

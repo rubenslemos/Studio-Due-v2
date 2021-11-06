@@ -159,10 +159,15 @@ router.get('/salao/:salaoId', async(req, res) => {
             especialidades: especialidades.map((e) => e.servicoId)
           });
         }
-        console.log(listaColaboradores[1].contaBancaria)
         res.json({
           error: false,
-          Colaboradores: listaColaboradores
+          Colaboradores: listaColaboradores.map((c) => ({
+            ...c,
+            vinculoId: c._id,
+            vinculo: c.status,
+            especialidades: c.especialidades,
+            dataCadastro: c.dataCadastro
+          }))
         });
       } catch (err) {
         res.json({ error: true, message: err.message });
