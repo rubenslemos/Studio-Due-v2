@@ -111,6 +111,7 @@ export function* addColaborador (){
         ...colaborador,
         salaoId: consts.salaoId,
       })
+      console.log('Colaborador', colaborador)
       res = response.data
     } else {
       const response = yield call( api.put, `/colaborador/${colaborador._id}`, { 

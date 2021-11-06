@@ -11,20 +11,20 @@ router.post('/', async(req, res) => {
     const session = await db.startSession()
     session.startTransaction()
     try {
-        const { colaborador, salaoId } = req.body
+        const { colaborador, salaoId, colaboradores } = req.body
         let novoColaborador = null
             //verificar existência do colaborador
         const existentColaborador = await Colaborador.findOne({
                 $or: [
-                    { email: colaborador.email },
-                    { telefone: colaborador.telefone }
+                     { email: colaboradores.email },
+                    { telefone: colaboradores.telefone }
                 ]
             })
             //caso o colaborador for inexistente, cadastre-o
         if (!existentColaborador) {
             //criaremos primeiro a conta Bancaria
             const { contaBancaria } = colaborador
-            const pagarmeContaBancaria = await pagarme('bank_accounts', {
+            const pagarmeContaBancaria = await pagarme('/bank_accounts', {
                 agencia: contaBancaria.agencia,
                 bank_code: contaBancaria.Banco,
                 conta: contaBancaria.numero,
@@ -52,12 +52,11 @@ router.post('/', async(req, res) => {
             }).save({ session })
         }
         //relacionamento
-        const colaboradorId = existentColaborador ? existentColaborador.id : novoColaborador.id
+        const colaboradorId = existentColaborador ? existentColaborador._id : novoColaborador._id
             //verificar relacionamento entree Salão e Colaborador
         const relacionamentoExistente = await salaoColaborador.findOne({
                 salaoId,
-                colaboradorId,
-                status: { $ne: 'E' }
+                colaboradorId
             })
             //se nao houver a relação
         if (!relacionamentoExistente) {
@@ -68,18 +67,18 @@ router.post('/', async(req, res) => {
             }).save({ session })
         }
         // se houver a relação
-        if (existentColaborador) {
-            const relacionamentoExistente = await salaoColaborador.findOneAndUpdate({
+        if (existentColaborador && relacionamentoExistente.status === 'I') {
+            await salaoColaborador.findOneAndUpdate({
                 salaoId,
                 colaboradorId,
-            }, { status: colaborador.vinculo }, { session })
+            }, { status: 'A' }, { session })
         }
         //relacionamento com os servicos
         await colaboradorServico.insertMany(
             colaborador.servicos.map(servicoId => ({
                 servicoId,
                 colaboradorId
-            }), { session })
+            }))
         )
         await session.commitTransaction()
         session.endSession()
