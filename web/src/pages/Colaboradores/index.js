@@ -31,7 +31,7 @@ const Colaboradores = () => {
   const setColaborador = (key, value) => {
     dispatch(updateColaborador({
       colaborador: {
-        colaborador,
+        ...colaborador,
         [key]: value
       }
     }))
@@ -41,13 +41,13 @@ const Colaboradores = () => {
     dispatch(
       updateColaborador({
         colaborador: {
-          colaborador,
+          ...colaborador,
           contaBancaria: { ...colaborador.contaBancaria, [key]: value },
         },
       })
     );
   };
-    console.log (colaborador.contaBancaria)
+    // console.log (colaborador.contaBancaria)
 
   const onRowClick = (colaborador) => {
     dispatch(
@@ -216,10 +216,10 @@ const Colaboradores = () => {
             <div className="form-group col-6">
               <p>Banco</p>
               <SelectPicker
-                disabled={form.disabled}
+                disabled={false}
                 value={colaborador.contaBancaria.banco}
                 block
-                placeholder={colaborador.contaBancaria.banco === '' && null ? "Bancos" : colaborador.contaBancaria.banco}
+                placeholder={colaborador.contaBancaria.banco}
                 data={bancos}
                 onChange={(value) => setContaBancaria('banco', value)}
                 size='lg'
