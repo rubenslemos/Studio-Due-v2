@@ -10,16 +10,14 @@ const colaborador = new Schema({
         required: [true, 'Telefone Obrigatório']
     },
     foto: {
-        type: String,
-        required: [true, 'Foto Obrigatória']
+        type: String
     },
     senha: {
         type: String,
         default: null
     },
     email: {
-        type: String,
-        required: [true, 'E-mail Obrigatório']
+        type: String
     },
     sexo: {
         type: String,

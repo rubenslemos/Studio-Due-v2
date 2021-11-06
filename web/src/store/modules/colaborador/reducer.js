@@ -19,8 +19,8 @@ const INITIAL_STATE = {
     telefone: '',
     dataNascimento: '',
     especialidades:[],
-    sexo: 'M',
-    vinculo: "A",
+    sexo: '',
+    vinculo: '',
     contaBancaria:{
     	titular: '',
     	cpfCnpj: '',

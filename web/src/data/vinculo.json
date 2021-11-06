@@ -1,0 +1,10 @@
+[
+  {
+    "value": "A",
+    "label": "Ativo"
+  },
+  {
+    "value": "I",
+    "label": "Inativo"
+  }
+]

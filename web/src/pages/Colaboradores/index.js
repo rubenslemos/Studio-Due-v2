@@ -15,6 +15,8 @@ import {
 import { Drawer, Modal, Button, TagPicker, SelectPicker } from 'rsuite'
 import RemindFillIcon from '@rsuite/icons/RemindFill'
 import bancos from '../../data/bancos.json'
+import vinculo from '../../data/vinculo.json'
+import tipo from '../../data/TipoConta.json'
 const Colaboradores = () => {
   
   const dispatch = useDispatch()
@@ -47,7 +49,7 @@ const Colaboradores = () => {
       })
     );
   };
-    // console.log (colaborador.contaBancaria)
+  console.log (colaborador)
 
   const onRowClick = (colaborador) => {
     dispatch(
@@ -137,27 +139,20 @@ const Colaboradores = () => {
                 />
             </div>
           </div>          
-          <div className="form-group col-4">
+          <div className="form-group col-3">
             <p>Vinculo</p>
-            
-              <select 
-                className="form-control"
-                disabled={form.disabled && behavior === 'create'}
-                placeholder="Telefone colaborador"
-                value={colaborador.vinculo}
-                onChange={(e) => setColaborador('vinculo', e.target.value)}
-               >
-                <option value="A">Ativo</option>
-                <option value="I">Inativo</option>
-              </select>
-            
+            <SelectPicker
+              disabled={form.disabled && behavior === 'create'}
+              data={vinculo}
+              value={colaborador.vinculo}
+              onChange={(vinculo) => setColaborador('vinculo', vinculo)}
+            />
           </div>
-          <div className="form-group col-4">
+          <div className="form-group col-5">
             <p>Data Nascimento</p>
             <div className="input-group">
               <input 
-                type="text"
-                onfocus="(this.type='date')"
+                type="Date"
                 disabled={form.disabled}
                 className="form-control"
                 placeholder={moment(colaborador.dataNascimento).format('DD/MM/YYYY')}
@@ -189,8 +184,7 @@ const Colaboradores = () => {
               onChange= {(especialidade) => setColaborador('especialidades', especialidade)}
             />
           </div>
-          <div className="row">
-            <div className="form-group col-6">
+              <div className="form-group col-6">
               <p>Titular da Conta</p>
               <input
                 type="text"
@@ -204,8 +198,8 @@ const Colaboradores = () => {
             <div className="form-group col-6">
               <p>CPF/CNPJ</p>
               <input
-                type="text"
                 className="form-control"
+                type="text"
                 placeholder='CPF/CNPJ do Titular'
                 disabled={form.disabled}
                 value={colaborador.contaBancaria.cpfCnpj}
@@ -215,27 +209,26 @@ const Colaboradores = () => {
             <div className="form-group col-6">
               <p>Banco</p>
               <SelectPicker
-                disabled={false}
-                value={colaborador.contaBancaria.banco}
+                disabled={form.disabled && behavior === 'create'}
+                value={colaborador.contaBancaria.Banco}
                 block
                 data={bancos}
-                onChange={(value) => setContaBancaria('banco', value)}
+                onChange={(value) => setContaBancaria('Banco', value)}
                 size='lg'
                 />
             </div>
             <div className="form-group col-6">
             <p>Tipo de Conta</p>
-            <select
+            <SelectPicker
+              block
               disabled={form.disabled}
-              className="form-control"
-              value={colaborador.contaBancaria.tipo}
-              onChange={(e) => setColaborador('tipo', e.target.value)}
-              >
-            <option value="conta_corrente">Conta Corrente</option>
-            <option value="conta_poupanca">Conta Poupança</option>
-            </select>  
+              value={colaborador.contaBancaria.TipoConta}
+              data={tipo}
+              onChange={(e) => setContaBancaria('TipoConta', e)}
+              />
+            
           </div>
-          <div className="form-group col-5">
+          <div className="form-group col-6">
               <p>Agência</p>
               <input
                 type="text"
@@ -246,8 +239,8 @@ const Colaboradores = () => {
                 onChange={(e) => setContaBancaria('agencia', e.target.value)}
                 />
             </div>
-            <div className="form-group col-4">
-              <p>Número da Conta</p>
+            <div className="form-group col-3">
+              <p>Conta</p>
               <input
                 type="text"
                 className="form-control"
@@ -268,7 +261,6 @@ const Colaboradores = () => {
                 onChange={(e) => setContaBancaria('dv', e.target.value)}
                 />
             </div>
-          </div>
             <div className="form-group col-12">
               <p></p>
               <button
