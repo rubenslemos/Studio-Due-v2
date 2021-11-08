@@ -3,6 +3,10 @@ import 'rsuite/dist/rsuite.css'
 import moment from 'moment'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import RemindFillIcon from '@rsuite/icons/RemindFill'
+import bancos from '../../data/bancos.json'
+import vinculo from '../../data/vinculo.json'
+import tipo from '../../data/TipoConta.json'
 import { 
   allColaboradores, 
   updateColaborador, 
@@ -10,15 +14,17 @@ import {
   addColaborador, 
   resetColaborador,
   unlinkColaborador,
-  allServicos,
-  saveColaborador
+  allServicos
 } from '../../store/modules/colaborador/actions'
-import { Drawer, Modal, Button, TagPicker, SelectPicker, Checkbox, Message } from 'rsuite'
-import RemindFillIcon from '@rsuite/icons/RemindFill'
-import util from '../../services/util'
-import bancos from '../../data/bancos.json'
-import vinculo from '../../data/vinculo.json'
-import tipo from '../../data/TipoConta.json'
+import { 
+  Drawer, 
+  Modal, 
+  Button, 
+  TagPicker, 
+  SelectPicker, 
+  Checkbox, 
+  Message 
+} from 'rsuite'
 const Colaboradores = () => {
   
   const dispatch = useDispatch()
@@ -68,33 +74,7 @@ const Colaboradores = () => {
       dispatch(unlinkColaborador())
     }
     const save = () => { 
-      if (
-        !util.allFields(colaborador, [
-          'email',
-          'nome',
-          'telefone',
-          'dataNascimento',
-          'sexo',
-          'vinculo',
-          'especialidades',
-        ]) ||
-        !util.allFields(colaborador.contaBancaria, [
-          'titular',
-          'cpfCnpj',
-          'Banco',
-          'TipoConta',
-          'agencia',
-          'numero',
-          'dv'
-        ])
-      ){
-        alert("Antes de prosseguir, Preencha todos os campos")
-      }
-       if(behavior === 'create'){
       dispatch(addColaborador())
-    } else {
-      dispatch(saveColaborador())
-    }
   }
 
     useEffect(() => {
@@ -158,7 +138,7 @@ const Colaboradores = () => {
             </div>
           </div>
           <div className="form-group col-6">
-            <p>Telefone/WhastApp</p>
+            <p>Telefone/WhatsApp</p>
             <div className="input-group">
               <input 
                 type="text" 
@@ -175,19 +155,19 @@ const Colaboradores = () => {
             <SelectPicker
               disabled={form.disabled && behavior === 'create'}
               data={vinculo}
-              value={colaborador.vinculo}
-              onChange={(vinculo) => setColaborador('vinculo', vinculo)}
+              value={colaborador.status}
+              onChange={(status) => setColaborador('status', status)}
             />
           </div>
           <div className="form-group col-5">
             <p>Data Nascimento</p>
             <div className="input-group">
               <input 
-                type="Date"
-                disabled={form.disabled}
+                type="date" 
+                disabled={form.disabled && behavior === 'create'}
                 className="form-control"
-                placeholder={moment(colaborador.dataNascimento).format('DD/MM/YYYY')}
-                value={moment(colaborador.dataNascimento).format('DD/MM/YYYY')}
+                placeholder={colaborador.dataNascimento}
+                value={colaborador.dataNascimento}
                 onChange={(e) => setColaborador('dataNascimento', e.target.value)}
                 />
             </div>
@@ -365,7 +345,8 @@ const Colaboradores = () => {
               }}
               />
             
-            {'    '} &nbsp;Tem certeza que deseja excluir Colaborador?<br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ação Irreversível!         
+            {'    '} &nbsp;Tem certeza que deseja excluir Colaborador?<br/> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ação Irreversível!         
         </Modal.Body>
         <Modal.Footer>
             <Button
@@ -450,15 +431,14 @@ const Colaboradores = () => {
            },
            {
             label: 'Especialidades',
-            key: 'especialidades',
-            content: (especialidades) => especialidades.length
+            key: 'servicos'
            },
            { 
              label: 'Vinculo',
-             key: 'vinculo',
+             key: 'status',
              width: 80,
              fixed: true,
-             content: (vinculo) => colaborador.vinculo === "A" ? "Ativo" : "Inativo"
+             content: (e) => e.status === 'A' ? "Ativo" : "Inativo"
            },
              { 
                label: 'Data Cadastro',

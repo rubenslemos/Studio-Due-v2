@@ -99,8 +99,7 @@ export function* filterColaboradores (){
 export function* addColaborador (){ 
   const { form, colaborador, components, behavior} = yield select(state => state.Colaboradores)
   try {
-    yield put(updateColaborador({
-      form: {
+    yield put(updateColaborador({ form: {
         ...form,
         saving: true
       }
@@ -108,26 +107,20 @@ export function* addColaborador (){
     let res = {}
     if ( behavior === 'create'){
       const response = yield call( api.post, `/colaborador`, { 
-        colaborador,
+        ...colaborador,
         salaoId: consts.salaoId,
       })
-      console.log('Colaborador', colaborador)
-      res = response.data
+        res = response.data
     } else {
       const response = yield call( api.put, `/colaborador/${colaborador._id}`, { 
-        vinculo: colaborador.vinculo,
+        vinculo: colaborador.status,
         vinculoId: colaborador.vinculoId,
         especialidades: colaborador.especialidades
       })
       res = response.data
     }
 
-      yield put(updateColaborador({
-        form: {
-          ...form,
-          saving: false
-        }
-      }))
+      yield put(updateColaborador({ form: { ...form, saving: false }}))
 
       if(res.error) {
 
@@ -246,46 +239,11 @@ export function* allServicos (){
   }
 }
 
-export function* saveColaborador() {
-  const { colaborador, form, components } = yield select(
-    (state) => state.colaborador
-  );
-
-  try {
-    yield put(updateColaborador({ form: { ...form, saving: true } }));
-    const { vinculo, vinculoId, especialidades } = colaborador;
-
-    const { data: res } = yield call(
-      api.put,
-      `/colaborador/${colaborador._id}`,
-      { vinculo, vinculoId, especialidades }
-    );
-    yield put(updateColaborador({ form: { ...form, saving: false } }));
-
-    if (res.error) {
-      // ALERT DO RSUITE
-      alert(res.message)
-      return false;
-    }
-
-    yield put(allColaboradoresAction());
-    yield put(
-      updateColaborador({ components: { ...components, drawer: false } })
-    );
-    yield put(resetColaborador());
-  } catch (err) {
-    // COLOCAR AQUI O ALERT DO RSUITE
-    yield put(updateColaborador({ form: { ...form, saving: false } }));
-    alert(err.message)
-  }
-}
 
 export default all([
   takeLatest(types.ALL_COLABORADORES, allColaboradores),
   takeLatest(types.FILTER_COLABORADORES, filterColaboradores),
   takeLatest(types.ADD_COLABORADOR, addColaborador),
   takeLatest(types.UNLINK_COLABORADOR, unlinkColaborador),
-  takeLatest(types.ALL_SERVICOS, allServicos),
-  takeLatest(types.SAVE_COLABORADOR, saveColaborador)
-
+  takeLatest(types.ALL_SERVICOS, allServicos)
 ])

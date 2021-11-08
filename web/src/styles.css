@@ -61,9 +61,9 @@ header small{
 sidebar{
   background-color: black;
   margin:0px;
-  /* display:flex;
+  display:flex;
   flex-direction: column;
-  align-items: start; */
+  align-items: flex-start;
 }
 
 li{
@@ -142,4 +142,10 @@ li.active{
   display:flex;
   justify-content: center;
   align-items: right;
+}
+input[type="date"]:before {
+  content: attr(placeholder) !important;
+}
+input[type="date"]:focus:before {
+  content: '' !important;
 }

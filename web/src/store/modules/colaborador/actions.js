@@ -6,4 +6,3 @@ export function addColaborador(){ return { type: types.ADD_COLABORADOR } }
 export function resetColaborador(){ return { type: types.RESET_COLABORADOR } }
 export function unlinkColaborador(){ return { type: types.UNLINK_COLABORADOR } }
 export function allServicos(){ return { type: types.ALL_SERVICOS } }
-export function saveColaborador(){ return { type: types.SAVE_COLABORADOR } }

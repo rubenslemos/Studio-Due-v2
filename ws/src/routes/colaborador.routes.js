@@ -151,11 +151,13 @@ router.get('/salao/:salaoId', async(req, res) => {
         for (let colaborador of colaboradores) {
           const especialidades = await colaboradorServico.find({
             colaboradorId: colaborador.colaboradorId._id,
-          })
-    
+          }).populate('servicoId')
+          console.log(listaColaboradores)
           listaColaboradores.push({
             ...colaborador.colaboradorId._doc,
-            especialidades: especialidades.map((e) => e.servicoId)
+            especialidades: especialidades.map((e) => e.servicoId && e.servicoId._id),
+            servicos: especialidades.map((e) => e.servicoId && e.servicoId.descricao).join(', '),
+            dataNascimento: moment(colaborador.dataNascimento).toDate()
           });
         }
         res.json({

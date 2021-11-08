@@ -31,7 +31,7 @@ const colaborador = new Schema({
         default: 'A'
     },
     dataNascimento: {
-        type: String, //YYYY-MM-DD,
+        type: Date, //YYYY-MM-DD,
         required: [true, 'Data de Nascimento Obrigatória']
     },
     contaBancaria: {
