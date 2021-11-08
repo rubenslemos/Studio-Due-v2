@@ -4,7 +4,8 @@ const INITIAL_STATE = {
   behavior: 'create',
   components:{
     drawer: false,
-    confirmDelete: false
+    confirmDelete: false,
+    tab: 'dados-cadastrais' // dados-cadastrais, agendamentos, arquivos
   },
   form:{
     filtering: false,

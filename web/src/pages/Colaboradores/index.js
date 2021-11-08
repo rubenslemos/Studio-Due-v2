@@ -10,10 +10,12 @@ import {
   addColaborador, 
   resetColaborador,
   unlinkColaborador,
-  allServicos
+  allServicos,
+  saveColaborador
 } from '../../store/modules/colaborador/actions'
-import { Drawer, Modal, Button, TagPicker, SelectPicker } from 'rsuite'
+import { Drawer, Modal, Button, TagPicker, SelectPicker, Checkbox, Message } from 'rsuite'
 import RemindFillIcon from '@rsuite/icons/RemindFill'
+import util from '../../services/util'
 import bancos from '../../data/bancos.json'
 import vinculo from '../../data/vinculo.json'
 import tipo from '../../data/TipoConta.json'
@@ -66,8 +68,35 @@ const Colaboradores = () => {
       dispatch(unlinkColaborador())
     }
     const save = () => { 
+      if (
+        !util.allFields(colaborador, [
+          'email',
+          'nome',
+          'telefone',
+          'dataNascimento',
+          'sexo',
+          'vinculo',
+          'especialidades',
+        ]) ||
+        !util.allFields(colaborador.contaBancaria, [
+          'titular',
+          'cpfCnpj',
+          'Banco',
+          'TipoConta',
+          'agencia',
+          'numero',
+          'dv'
+        ])
+      ){
+        alert("Antes de prosseguir, Preencha todos os campos")
+      }
+       if(behavior === 'create'){
       dispatch(addColaborador())
+    } else {
+      dispatch(saveColaborador())
     }
+  }
+
     useEffect(() => {
       dispatch(allColaboradores())
       dispatch(allServicos())
@@ -186,6 +215,32 @@ const Colaboradores = () => {
               onChange= {(especialidade) => setColaborador('especialidades', especialidade)}
             />
           </div>
+          <Checkbox
+                checked={colaborador.especialidades?.length === servicos.length}
+                disabled={
+                  (form.disabled && behavior === 'create') ||
+                  colaborador.especialidades?.length === servicos.length
+                }
+                onChange={(v, checked) => {
+                  if (checked) {
+                    setColaborador(
+                      'especialidades',
+                      servicos.map((s) => s.value)
+                    );
+                  } else {
+                    setColaborador('especialidades', []);
+                  }
+                }}
+              >
+                {' '}
+                Selecionar Todas
+              </Checkbox>
+              <Message
+            showIcon
+            closable
+            type="info"
+            header="Preencha corretamente as informações bancárias do colaborador."
+          />
               <div className="form-group col-6">
               <p>Titular da Conta</p>
               <input
@@ -349,10 +404,16 @@ const Colaboradores = () => {
               onClick={() =>{
                 dispatch(resetColaborador())
                 dispatch(updateColaborador({
-                  behavior: 'create'
+                  behavior: 'create',
+                  components: {
+                    ...components,
+                    tab: 'dados-cadastrais',
+                    drawer: true,
+                  }
                 }))
-                setComponent('drawer', true)}
-              }
+                //setComponents('tab', 'dados-cadastrais')
+                //setComponent('drawer', true)}
+              }}
               >
               <span className="mdi mdi-account-plus-outline"> Novo Colaborador</span>
             </button>
@@ -390,9 +451,8 @@ const Colaboradores = () => {
            {
             label: 'Especialidades',
             key: 'especialidades',
-            content: (especialidades) => especialidades.length,
-            sortable: true,
-          },
+            content: (especialidades) => especialidades.length
+           },
            { 
              label: 'Vinculo',
              key: 'vinculo',

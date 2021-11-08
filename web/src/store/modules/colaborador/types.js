@@ -5,7 +5,8 @@ const types = {
   ADD_COLABORADOR: '@colaborador/ADD',
   RESET_COLABORADOR: '@colaborador/RESET',
   UNLINK_COLABORADOR: '@colaborador/UNLINK',
-  ALL_SERVICOS: '@colaborador/ALL_SERVICOS'
+  ALL_SERVICOS: '@colaborador/ALL_SERVICOS',
+  SAVE_COLABORADOR: '@colaborador/SAVE_COLABORADOR'
 }
 
 export default types
