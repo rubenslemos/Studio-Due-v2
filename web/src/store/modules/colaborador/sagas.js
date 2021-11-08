@@ -108,7 +108,7 @@ export function* addColaborador (){
     let res = {}
     if ( behavior === 'create'){
       const response = yield call( api.post, `/colaborador`, { 
-        ...colaborador,
+        colaborador,
         salaoId: consts.salaoId,
       })
       console.log('Colaborador', colaborador)

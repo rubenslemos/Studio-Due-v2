@@ -49,7 +49,9 @@ const Colaboradores = () => {
       })
     );
   };
-  console.log (colaborador)
+  console.log ("colaborador: ", colaborador)
+  console.log ("colaboradores: ", colaboradores)
+  console.log ("Servicos: ", servicos)
 
   const onRowClick = (colaborador) => {
     dispatch(
