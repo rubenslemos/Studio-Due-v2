@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-react-dateinputs": "^4.10.0",
     "@rsuite/icons": "^1.0.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
+    "date-fns": "^2.25.0",
     "immer": "^9.0.6",
     "moment": "^2.29.1",
+    "rc-time-picker": "^3.7.3",
     "react": "^17.0.2",
     "react-big-calendar": "^0.38.0",
+    "react-datepicker": "^4.3.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
@@ -46,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-big-calendar": "^0.36.1",
+    "@types/react-datepicker": "^4.1.7"
   }
 }

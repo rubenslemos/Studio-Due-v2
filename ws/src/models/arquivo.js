@@ -19,7 +19,5 @@ const arquivo = new Schema({
         default: Date.now
     }
 })
-mongoose.model('Arquivo', arquivo)
-module.exports = {
-    Arquivo: mongoose.model('Arquivo', arquivo)
-}
+
+module.exports = mongoose.model('Arquivo', arquivo)

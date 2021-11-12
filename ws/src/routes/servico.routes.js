@@ -19,7 +19,8 @@ router.post('/', async(req, res) => {
                     const nameParts = file.name.split('.')
                     const filename = `${new Date().getTime()}
                     .${nameParts[nameParts.length - 1]}`
-                    const path = `servicos/${salaoId}/${filename}`
+                    const name = filename.replace(/\s/g, '')
+                    const path = `servicos/${salaoId}/${name}`
                     const response = await aws.uploadToS3(file, path)
                     if (response.error) {
                         errors.push({
@@ -44,7 +45,7 @@ router.post('/', async(req, res) => {
                 model: 'Servico',
                 caminho: arquivo
             }))
-            await Arquivo.Arquivo.insertMany(arquivos)
+            await Arquivo.insertMany(arquivos)
             res.json({ servico: servicoCadastrado, arquivos })
         } catch (err) {
             res.json({ error: true, message: err.message })
@@ -65,7 +66,8 @@ router.put('/:id', async(req, res) => {
                     const nameParts = file.name.split('.')
                     const filename = `${new Date().getTime()}
                     .${nameParts[nameParts.length - 1]}`
-                    const path = `servicos/${salaoId}/${filename}`
+                    const name = filename.replace(/\s/g, '')
+                    const path = `servicos/${salaoId}/${name}`
                     const response = await aws.uploadToS3(file, path)
                     if (response.error) {
                         errors.push({ error: true, message: response.message })
@@ -90,7 +92,7 @@ router.put('/:id', async(req, res) => {
                 model: 'Servico',
                 caminho: arquivo
             }))
-            await Arquivo.Arquivo.insertMany(arquivos)
+            await Arquivo.insertMany(arquivos)
             res.json({ Servico: "Alterado Com Sucesso" })
         } catch (err) {
             res.json({ error: true, message: err.message })
@@ -100,10 +102,10 @@ router.put('/:id', async(req, res) => {
 })
 router.post('/delete', async(req, res) => {
     try {
-        const { id } = req.body
-        await aws.deleteFileS3(id)
-        await Arquivo.Arquivo.findOneAndDelete({
-            caminho: id,
+        const { arquivo } = req.body
+        await aws.deleteFileS3(arquivo)
+        await Arquivo.findOneAndDelete({
+            caminho: arquivo,
         })
         res.json({ Arquivo: "Deletado Com Sucesso" })
     } catch (err) {
@@ -113,7 +115,7 @@ router.post('/delete', async(req, res) => {
 router.delete('/:id', async(req, res) => {
     try {
         const { id } = req.params
-        await servicos.Servico.findOneAndUpdate(id, { status: "E" })
+        await servicos.Servico.findByIdAndUpdate(id, { status: "E" })
         res.json({ Serviço: "Deletado Com Sucesso" })
     } catch (err) {
         res.json({ error: true, message: err.message })
@@ -127,14 +129,15 @@ router.get('/salao/:salaoId', async(req, res) => {
             status: { $ne: "E" }
         })
         for (let servico of Servicos) {
-            const arquivo = await Arquivo.Arquivo.find({
+            const arquivo = await Arquivo.find({
                 model: 'Servico',
                 referenciaId: servico._id
             })
             servicosSalao.push({...servico._doc, arquivo })
         }
-        res.json({ servicos: servicosSalao })
-        console.log(servicosSalao)
+        res.json({ Servicos: servicosSalao.map ((s) =>({
+            ...s
+        }))})
     } catch (err) {
         res.json({ error: true, message: err.message })
     }

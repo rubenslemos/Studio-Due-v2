@@ -72,12 +72,12 @@ li{
   font-size: 20px;
   color: var(--sidebarFnt);
 }
-li text{
+li text:not(react-datepicker__time-list-item){
   margin-left: 10px;
   font-family: var(--fontPrimary) ;
   text-decoration: none;
 }
-li:hover{
+li:hover:not(react-datepicker__time-list-item){
   color: rgb(0, 139, 253);
   transition: 0.5s;
 }
@@ -89,7 +89,7 @@ a {
   transition: 0.5s;
 }
 
-li.active{
+li.active:not(react-datepicker__time-list-item ){
   color: rgb(0, 139, 253);
 }
 .button{
@@ -119,6 +119,7 @@ li.active{
   justify-content: center;
   align-items: center;
   margin-top: -18px;
+  font-size: 30px;
 }
 .drawer p {
   margin-top: 15px;
@@ -143,9 +144,19 @@ li.active{
   justify-content: center;
   align-items: right;
 }
-input[type="date"]:before {
-  content: attr(placeholder) !important;
+
+.drawer button span{
+  font-size: 35px;
+  margin: 1px;
+  padding: 1px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
 }
-input[type="date"]:focus:before {
-  content: '' !important;
+.clock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

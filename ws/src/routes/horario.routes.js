@@ -44,18 +44,17 @@ router.delete('/:horarioId', async(req, res) => {
 })
 router.post('/colaboradores', async(req, res) => {
     try {
-        const ColaboradorServico = await colaboradorServico.find({
-            servicoId: { $in: req.body.especialidades },
+        const colaboradores = await colaboradorServico.find({
+            servicoId: { $in: req.body.servicos },
             status: 'A'
-        }).populate('colaboradorId')
-        const listaColaboradores = _.uniqBy(
-                ColaboradorServico,
-                (vinculo) => vinculo
-                .colaboradorId._id.toString())
+        }).populate('colaboradorId -_id')
+        const listaColaboradores = _.uniqBy( colaboradores, (vinculo) => 
+            vinculo.colaboradorId._id.toString())
             .map((vinculo) => ({
                 label: vinculo.colaboradorId.nome,
                 value: vinculo.colaboradorId._id
             }))
+            console.log(listaColaboradores)
         res.json({
             listaColaboradores
         })

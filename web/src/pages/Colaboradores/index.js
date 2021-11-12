@@ -23,7 +23,7 @@ import {
   TagPicker, 
   SelectPicker, 
   Checkbox, 
-  Message 
+  Message
 } from 'rsuite'
 const Colaboradores = () => {
   
@@ -97,7 +97,7 @@ const Colaboradores = () => {
             <div class="input-group mb-3">
                 <input
                   type="email"
-                  class="form-control"
+                  class="form-control rounded-end"
                   placeholder={behavior === 'create' ? "E-mail do colaborador" : colaborador.email}
                   disabled={behavior !== 'create'}
                   onChange={(e) => {
@@ -153,6 +153,8 @@ const Colaboradores = () => {
           <div className="form-group col-3">
             <p>Vinculo</p>
             <SelectPicker
+              block
+              size='lg'
               disabled={form.disabled && behavior === 'create'}
               data={vinculo}
               value={colaborador.status}
@@ -163,13 +165,12 @@ const Colaboradores = () => {
             <p>Data Nascimento</p>
             <div className="input-group">
               <input 
-                type="date" 
+                type={behavior === 'create' ? 'date' : 'text'} 
                 disabled={form.disabled && behavior === 'create'}
                 className="form-control"
-                placeholder={colaborador.dataNascimento}
-                value={colaborador.dataNascimento}
+                value={behavior !== 'create' ? moment(colaborador.dataNascimento).format('DD/MM/YYYY') : null}
                 onChange={(e) => setColaborador('dataNascimento', e.target.value)}
-                />
+              />
             </div>
  	        </div>
           <div className="form-group col-4">
@@ -215,12 +216,14 @@ const Colaboradores = () => {
                 {' '}
                 Selecionar Todas
               </Checkbox>
+              <div className="form-group col-12">
               <Message
-            showIcon
-            closable
-            type="info"
-            header="Preencha corretamente as informações bancárias do colaborador."
-          />
+                showIcon
+                closable
+                type="info"
+                header="Atenção ao preencher as informações bancárias do colaborador."
+              />
+              </div>
               <div className="form-group col-6">
               <p>Titular da Conta</p>
               <input
@@ -258,6 +261,7 @@ const Colaboradores = () => {
             <p>Tipo de Conta</p>
             <SelectPicker
               block
+              size='lg'
               disabled={form.disabled}
               value={colaborador.contaBancaria.TipoConta}
               data={tipo}

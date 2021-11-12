@@ -41,7 +41,6 @@ const Agendamentos = () => {
        moment().weekday(6).format('YYYY-MM-DD')
     ))
   },[dispatch])
-  console.log(dispatch)
   return (
     <div className="col p-5 overflow-auto h-100">
       <div className="row">
