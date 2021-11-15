@@ -1,13 +1,14 @@
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import React, { useEffect } from 'react'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { addHorario, allHorarios, allServicos,resetHorario, updateHorario, filterColaboradores } from '../../store/modules/horario/actions'
+import { addHorario, allHorarios, allServicos,resetHorario, updateHorario, filterColaboradores, removeHorario } from '../../store/modules/horario/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import 'moment/locale/pt-br'
-import { Drawer, TagPicker, Checkbox} from 'rsuite'
-import TimePicker from 'rc-time-picker'
+import { Drawer, TagPicker, Checkbox, Modal, Button, DatePicker} from 'rsuite'
+import RemindFillIcon from '@rsuite/icons/RemindFill'
 import 'rc-time-picker/assets/index.css'
+import colors from '../../data/colors.json';
 moment.locale('pt-br')
 
 const localizer = momentLocalizer(moment)
@@ -16,8 +17,7 @@ const Horarios = () => {
   
   const dispatch = useDispatch()
   const { horarios, horario, servicos, components, behavior, form, colaboradores } = useSelector((state)=> state.Horarios)
-  // horario.inicio = moment(horario.inicio).toDate()
-  // horario.fim = moment(horario.fim).toDate()
+
   const diasDaSemana = [
     'domingo',
     'segunda-feira',
@@ -45,25 +45,48 @@ const Horarios = () => {
       })
     )
   }
+  
+  const onHorarioClick = (horario) => {
+    dispatch(
+      updateHorario({
+        horario,
+        behavior: 'update',
+      })
+    )
+    setComponents('drawer', true)
+  }
+
   const setHorario = (key, value) => {
     dispatch( updateHorario({ horario: { ...horario, [key]: value }}))
   }
-  const formatEventos = horarios.map((horario, index)=> horario.dias.map((dia) => ({
-    title: `${horario.especialidades.length} serviço(s) e
-    ${horario.colaboradores.length} colabs`,
-    start: new Date(
-      diasSemanaData[dia].setHours(
-        parseInt(moment(horario.inicio).format('HH')),
-        parseInt(moment(horario.inicio).format('mm'))
-      )
-    ),    
-    end: new Date(
-      diasSemanaData[dia].setHours(
-        parseInt(moment(horario.fim).format('HH')),
-        parseInt(moment(horario.fim).format('mm'))
-      )
-    ),
-  }))).flat()
+  const formatEventos = () => {
+    let listaEventos = [];
+    // eslint-disable-next-line array-callback-return
+    horarios.map((horario, index) => {
+      
+      // eslint-disable-next-line array-callback-return
+      horario.dias.map((dia) => {
+        listaEventos.push({
+          resource: {...horario, backgroundColor: colors[index]},
+          title: `${horario.especialidades.length} espec. e ${horario.colaboradores.length} colab. disponíveis`,
+          start: new Date(
+            diasSemanaData[dia].setHours(
+              parseInt(moment(horario.inicio).format('HH')),
+              parseInt(moment(horario.inicio).format('mm'))
+            )
+          ),
+          end: new Date(
+            diasSemanaData[dia].setHours(
+              parseInt(moment(horario.fim).format('HH')),
+              parseInt(moment(horario.fim).format('mm'))
+            )
+          ),
+        })
+      })
+    })
+
+    return listaEventos;
+  }
   
   console.log('Horarios: ',horarios)
   console.log('Horario: ',horario)
@@ -73,9 +96,15 @@ const Horarios = () => {
   const save = () => { 
     dispatch(addHorario())
   }
+
+  const remove = () => {
+    dispatch(removeHorario());
+  };
+
   useEffect(() => {
    dispatch(allHorarios())
    dispatch(allServicos())
+   dispatch(filterColaboradores())
   },[dispatch])
 
   useEffect(() => {
@@ -116,28 +145,27 @@ const Horarios = () => {
           </div>
           <div className="form-group col-6">
             <p>Horário Inicial</p>
-            <TimePicker
-              placeholder={horario.inicio === "" || null ? `Inicio` : horario.inicio}
-              defaultValue={horario.inicio}
-              showSecond={false}
-              minuteStep={30}
-              onChange={(e) => setHorario('inicio', e)}
-              inputIcon={<small className="mdi mdi-alarm-check ms-2"/>}
-              className="d-flex justify-content-center align-items-center"
-            />
+              <DatePicker
+                block
+                placeholder={horario.inicio === "" || null ? `Início` : moment(horario.inicio).format("HH:mm")}
+                format="HH:mm"
+                hideMinutes={(min) => ![0, 30].includes(min)}
+                onChange={(e) => {
+                  setHorario('fim', e);
+                }}
+              />
           </div>
           <div className="form-group col-6">
             <p>Horário Final</p>  
-            <TimePicker
-              className="d-flex justify-content-center align-items-center"
-              placeholder={horario.fim === "" || null ? "Final" : horario.fim}
-              defaultValue={horario.fim}
-              showSecond={false}
-              minuteStep={30}
-              onChange={(e) => setHorario('fim', e)}
-              // className="mdi mdi-alarm-check"
-              inputIcon={<small className="mdi mdi-alarm-check ms-2"/>}
-            />
+              <DatePicker
+                block
+                placeholder={horario.fim === "" || null ? `Fim` : moment(horario.fim).format("HH:mm")}
+                format="HH:mm"
+                hideMinutes={(min) => ![0, 30].includes(min)}
+                onChange={(e) => {
+                  setHorario('fim', e);
+                }}
+              />
           </div>          
           <div className="col-12">
             <p>Especialidades</p>
@@ -181,8 +209,8 @@ const Horarios = () => {
                 }}
               />
               <Checkbox
-                disabled={horario.colaboradores.length}
-                checked={horario.colaboradores.length}
+                disabled={horario.colaboradores.length === servicos.length}
+                checked={horario.colaboradores.length === servicos.length} 
                 onChange={(v, selected) => {
                   if (selected) {
                     setHorario(
@@ -213,12 +241,9 @@ const Horarios = () => {
             className="button mx-auto save"
             loading={form.saving}
             onClick={() => {
-              if (behavior === 'create') {
-                save();
-              } else {
                 setComponents('confirmDelete', true);
               }
-            }}
+            }
             >
             Remover horario
           </button>)}
@@ -226,6 +251,55 @@ const Horarios = () => {
           </div>
         </Drawer.Body>
       </Drawer>
+      <Modal
+        open={components.confirmDelete}
+        onHide={() => setComponents('confirmDelete', false)}
+        size="xs"
+        >
+        <Modal.Body
+        style={{
+          fontFamily: 'Ubuntu',
+          fontSize: 15,
+          fontWeight: '500'
+        }}
+        >
+              <RemindFillIcon
+              style={{
+                color: '#d40000',
+                fontSize: 25,
+              }}
+              />
+            
+            {'    '} &nbsp;Tem certeza que deseja excluir Horario?<br/> 
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ação Irreversível!         
+        </Modal.Body>
+        <Modal.Footer>
+            <Button
+              loading={form.saving}
+              onClick={() => remove()}
+              color="red"
+              appearance="primary"
+              style={{
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: '500'
+              }}
+              >
+              Excluir Horario
+            </Button>
+            <Button
+              onClick={() => setComponents('confirmDelete', false)}
+              appearance='subtle'
+              style={{
+                fontFamily: 'Ubuntu',
+                fontSize: 16,
+                fontWeight: '500'
+              }}
+              >
+                Cancelar
+            </Button>
+        </Modal.Footer>
+      </Modal>
     <div className="row">
       <div className="col-12">
         <div className="w-100 d-flex justify-content-between">
@@ -247,12 +321,38 @@ const Horarios = () => {
             </div>
             </div>
               <Calendar
+                onSelectEvent={e=> {
+                  onHorarioClick(e.resource)
+                }}
+                onSelectSlot={(slotInfo) =>{
+                  const { start, end} = slotInfo
+                  dispatch(
+                    updateHorario({
+                      behavior: 'create',
+                      horario: {
+                        ...horario,
+                        dias: [moment(start).day()],
+                        inicio: start, 
+                        fim: end
+                      }
+                    })
+                  )
+                  setComponents('drawer', true)
+                }}
                 localizer={localizer}
                 date={diasSemanaData[moment().day()]}
                 toolbar={false}
                 popup
                 selectable={true}
-                events={formatEventos}
+                events={formatEventos()}
+                eventPropGetter={(event, start, end, isSelected) => {
+                  return {
+                    style: {
+                      backgroundColor: event.resource.backgroundColor,
+                      borderColor: event.resource.backgroundColor,
+                    },
+                  }
+                }}
                 defaultView="week"
                 style={{ height: 700, width: 1500 }}
                 formats={{

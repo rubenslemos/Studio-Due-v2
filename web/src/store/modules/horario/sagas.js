@@ -42,12 +42,7 @@ export function* filterColaboradores (){
       }))
     } catch (err) {
     // eslint-disable-next-line no-unused-expressions
-    yield put(updateHorario({
-      form: {
-        ...form,
-        filtering: false
-      }
-    }))
+    yield put(updateHorario({ form: { ...form, filtering: false }}))
     alert(err.message)
   }
 }
@@ -67,11 +62,7 @@ export function* addHorario (){
       })
         res = response.data
     } else {
-      const response = yield call( api.put, `/horario/${horario._id}`, { 
-        vinculo: horario.status,
-        vinculoId: horario.vinculoId,
-        especialidades: horario.especialidades
-      })
+      const response = yield call( api.put, `/horario/${horario._id}`, horario)
       res = response.data
     }
 

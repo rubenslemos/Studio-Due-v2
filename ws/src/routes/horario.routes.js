@@ -47,16 +47,16 @@ router.post('/colaboradores', async(req, res) => {
         const colaboradores = await colaboradorServico.find({
             servicoId: { $in: req.body.servicos },
             status: 'A'
-        }).populate('colaboradorId -_id')
-        const listaColaboradores = _.uniqBy( colaboradores, (vinculo) => 
-            vinculo.colaboradorId._id.toString())
-            .map((vinculo) => ({
-                label: vinculo.colaboradorId.nome,
-                value: vinculo.colaboradorId._id
+        }).populate('colaboradorId', 'nome').select('colaboradorId -_id')
+        const listaColaboradores = _.uniqBy( colaboradores, (c) => 
+            c.colaboradorId._id.toString())
+            .map((c) => ({
+                label: c.colaboradorId.nome,
+                value: c.colaboradorId._id
             }))
             console.log(listaColaboradores)
         res.json({
-            listaColaboradores
+            colaboradores: listaColaboradores
         })
     } catch (err) {
         res.json({ error: true, message: err.message })
