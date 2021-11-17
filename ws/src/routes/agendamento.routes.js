@@ -35,7 +35,7 @@ router.post('/', async(req, res) => {
         const colaboradores = await colaborador.findById(colaboradorId)
             .select('recipientId')
             //recuperar o Agendamento
-        let novoAgendamento = null
+        let agendamento = null
             //verificar existência do agendamento
         const existentAgendamento = await Agendamento.findOne({
                 $and: [
@@ -110,7 +110,7 @@ router.post('/', async(req, res) => {
                 throw pagamento
             }
             //criar Agendamento
-            novoAgendamento = await new Agendamento({
+            agendamento = await new Agendamento({
                 ...req.body,
                 transactionId: pagamento.data.id,
                 comissao: servicos.comissao,
@@ -120,9 +120,9 @@ router.post('/', async(req, res) => {
         await session.commitTransaction()
         session.endSession()
         if (existentAgendamento) {
-            res.json({ error: true, message: 'Agendamento já Cadastrado' })
+            res.json({ error: true, message: 'Agendamento já Cadastrado', existentAgendamento })
         } else {
-            res.json({ message: 'Agendamento cadastrado com Sucesso' })
+            res.json({ message: 'Agendamento cadastrado com Sucesso', agendamento })
         }
     } catch (err) {
         await session.abortTransaction()

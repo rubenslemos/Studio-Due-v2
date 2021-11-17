@@ -13,3 +13,15 @@ export function updateAgendamento(agendamentos){
     agendamentos
   }
 }
+
+export function addAgendamento(){
+  return {
+    type: types.ADD_AGENDAMENTO
+  }
+}
+
+export function resetAgendamento(){
+  return {
+    type: types.RESET_AGENDAMENTO
+  }
+}

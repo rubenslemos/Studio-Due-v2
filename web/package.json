@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "date-fns": "^2.25.0",
+    "dotenv": "^10.0.0",
     "immer": "^9.0.6",
     "moment": "^2.29.1",
     "rc-time-picker": "^3.7.3",

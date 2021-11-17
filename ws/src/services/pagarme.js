@@ -1,6 +1,6 @@
 const axios = require('axios')
 const api = axios.create({
-    baseURL: 'https://api.pagar.me/1/'
+    baseURL: process.env.BASEURL_PAGARME
 })
 const api_key = require('../data/keys.json').api_key
 module.exports = async(endpoint, data) => {
