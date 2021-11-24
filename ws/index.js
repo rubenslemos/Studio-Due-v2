@@ -19,7 +19,7 @@ app.use(busboy())
 app.use(busboyBodyParser())
 app.use(cors())
     //Variables
-app.set('port', 8081)
+app.set('port', 8080)
     //rotas
 app.use('/salao', router)
 app.use('/servico', routerServico)
