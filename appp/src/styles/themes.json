@@ -1,0 +1,35 @@
+{
+  "colors": {
+    "headerBg": "#ADB5BD",
+    "headerFnt": "#6C757D",
+    "sidebarBg": "#495057",
+    "sidebarFnt":" #adb5bd",
+    "sidebarFntSel": "#212529",
+    "titulo":" #E9ECEF",
+    "branco": "#F8F9FA",
+    "brancoSujo": "#DEE2E6",
+    "sidebarFnt50": "#adb5bd80",
+    "cinzaClaro": "#CED4DA",
+    "CinzaChumbo": "#343A40",
+    "success": "#38B000",
+    "fail": "#BA181B"
+  },
+  "fonts": {
+    "regular": {
+      "fontFamily": "Ubuntu-Regular",
+      "fontWeight": "normal"
+    },
+    "medium": {
+      "fontFamily": "Ubuntu-Medium",
+      "fontWeight": "normal"
+    },
+    "light": {
+      "fontFamily": "Ubuntu-Light",
+      "fontWeight": "normal"
+    },
+    "bold": {
+      "fontFamily": "Ubuntu-Bold",
+      "fontWeight": "normal"
+    }
+  }
+}
