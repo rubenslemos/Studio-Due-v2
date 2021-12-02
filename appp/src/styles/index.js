@@ -130,3 +130,20 @@ export const TextInput = styled(TextInputPaper).attrs({
   font-size: 15px;
   background: ${themes.colors.branco}
 `
+export const ImageList = styled.Image.attrs((props) => ({
+  source: {
+    uri: props.image,
+  },
+}))`
+  width: ${(props) => props.width || '70px'};
+  height: ${(props) => props.height || '70px'};
+  margin: ${(props) => props.spacing || '0 10px 0  0'};
+  border-radius: ${(props) => (props.circle ? props.width : '10px')};
+  background-color: ${themes.colors.headerFnt};
+  opacity: 0.7;
+`;
+
+export const Spacer = styled.View`
+  width: 100%;
+  height: ${(props) => props.size || '5px'};
+`

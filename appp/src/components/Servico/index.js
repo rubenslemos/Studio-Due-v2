@@ -5,7 +5,8 @@ import {
   Touchable,
   Cover,
   Titles,
-  Button
+  Button,
+  ImageList
 } from '../../styles'
 
 const servico = () => {
@@ -17,20 +18,20 @@ const servico = () => {
       background='branco'
       width='100%'
     >
-      <Cover
-        image="https://blog.beautyclass.tv/wp-content/uploads/2019/07/t%C3%A9cnicas-de-corte-de-cabelo-profissionais.jpg-768x469.jpg"
-      />
+        <ImageList 
+          image="https://blog.beautyclass.tv/wp-content/uploads/2019/07/t%C3%A9cnicas-de-corte-de-cabelo-profissionais.jpg-768x469.jpg"
+        />
+      
       <Box direction="column">
         <Text width='100%' align="flex-start" bold color="CinzaChumbo">
           Corte feminino
         </Text>
         <Text width='100%' align="flex-start" small color="headerFnt">
-          R$ 200,00 40min
+          R$ 200,00 • Tempo med: 40min
         </Text>
       </Box>
       <Box direction="column" align="flex-end" width='25%'>
-            <Button icon="clock-check-outline" background="success" mode="contained" uppercase={false} style={{width: 100 }}>Agendar</Button>
-            <Text small>Horários Disponiveis</Text>
+            <Button icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 100 }}>Agendar</Button>
           </Box>
     </Touchable>
   )

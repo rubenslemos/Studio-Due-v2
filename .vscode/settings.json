@@ -21,5 +21,6 @@
     "editor.fontFamily": "JetBrains Mono",
     "vscode-janus-debug.uploadOnSave": [
         "index"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic"
 }
