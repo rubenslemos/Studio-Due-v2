@@ -19,8 +19,11 @@ export const Cover = styled.ImageBackground.attrs((props) => ({
   height: ${(props) => props.height || '70px'};
   margin: ${(props) => props.spacing || '0 10px 0  0'};
   border-radius: ${(props) => (props.circle ? props.width : '3px')};
-  background-color: ${themes.colors.headerFnt};
+  background-color: ${(props) => props.colors ? themes.colors.headerFnt : themes.colors.branco};
+  border: ${(props) => props.border || 'none'};
   opacity: 0.7;
+  padding: ${(props) => (props.hasPadding ? '20px' : '0px')};
+  overflow: hidden;
 `;
 
 export const GradientView = styled(LinearGradient).attrs((props) => ({
@@ -51,8 +54,9 @@ export const Title = styled.ImageBackground.attrs((props) => ({
   width: ${(props) => props.width || '70px'};
   height: ${(props) => props.height || '70px'};
   margin: ${(props) => props.spacing || '0 0 0 0'};
-  background-color: ${themes.colors.headerFnt};
-  border-radius: ${(props) => (props.circle ? props.width : '100px')};
+  background-color: ${(props) => props.colors ? themes.colors.headerFnt : themes.colors.branco};
+  border: ${(props) => props.border || 'none'};
+  border-radius: ${(props) => (props.rounded ? '0' : '100px')};
   align-self: ${(props) => props.align || 'center'};
 `;
 
@@ -64,6 +68,7 @@ export const Text = styled(TextPaper)`
   padding: ${(props) => (props.hasPadding ? '20px' : '0px')};
   opacity: 1;
   align-self: ${(props) => props.align || 'center'};
+  justify-content: ${(props) => props.justify || 'flex-start'};
 `;
 
 export const Box = styled.View`
@@ -77,7 +82,7 @@ max-height: ${(props) => props.height || 'auto'};
 padding: ${(props) => (props.hasPadding ? '20px' : '0px')};
 padding-bottom: ${(props) => props.removePaddingBottom ? '0' : props.hasPadding ? '20px' : '0px'};
 margin: ${(props) => props.spacing || 0};
-border-radius: ${(props) => props.border || '0px'};
+border-radius: ${(props) => props.rounded || '0px'};
 background: ${(props) => themes.colors[props.background] || props.background || 'transparent'};
 `;
 
@@ -89,7 +94,7 @@ export const Touchable = styled.TouchableOpacity`
   height:${(props) => props.height || 'auto'} ;
   padding: ${(props) => (props.hasPadding ? '20px' : '0px')};
   margin: ${(props) => props.spacing || 0};
-  border-radius: ${(props) => props.border || '0px'};
+  border-radius: ${(props) => props.rounded || '0'};
   border: ${(props) => props.border || 'none'};
   background: ${(props) => themes.colors[props.background] || props.background || 'transparent'};
 `;

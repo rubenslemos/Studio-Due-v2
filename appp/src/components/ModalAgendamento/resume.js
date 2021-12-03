@@ -11,17 +11,17 @@ import {
 
 const resume = () => {
   return(
-    <Touchable 
-      height='90px'
+    <Box 
+      height='100px'
       hasPadding 
-      align='center'
+
       background='branco'
     >
         <ImageList 
           image="https://blog.beautyclass.tv/wp-content/uploads/2019/07/t%C3%A9cnicas-de-corte-de-cabelo-profissionais.jpg-768x469.jpg"
         />
       
-      <Box direction="column" hasPadding>
+      <Box direction="column">
         <Titles width='100%' align="center" bold color="CinzaChumbo" >
           Corte cabelo feminino
         </Titles>
@@ -32,7 +32,7 @@ const resume = () => {
           R$ 200,00 • Tempo med: 40min
         </Text>
       </Box>
-    </Touchable>
+    </Box>
   )
 }
 

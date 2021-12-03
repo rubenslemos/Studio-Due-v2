@@ -28,6 +28,7 @@ const Header = () => {
           <Title
             image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/studio-due-logo-transparent.png"
             justifyContent="center"
+            colors
           />
           <Text
             spacing="8px"
