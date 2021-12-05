@@ -9,6 +9,7 @@ const EspecialistasModal = () => {
   return(
     <Modal
       open={true}
+      closeOnTouchOutside={true}
       modalStyle={{
         borderRadius: 20
       }}
