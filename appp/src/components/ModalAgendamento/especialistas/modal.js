@@ -8,7 +8,10 @@ import {Dimensions} from 'react-native'
 const EspecialistasModal = () => {
   return(
     <Modal
-      open={false}
+      open={true}
+      modalStyle={{
+        borderRadius: 20
+      }}
     >
       <ScrollView>
         <Box direction="column">
