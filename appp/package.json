@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "github:react-native-async-storage/async-storage",
+    "eslint-plugin-react-native": "^3.11.0",
     "immer": "^9.0.7",
     "moment": "^2.29.1",
     "react": "^16.8.3",

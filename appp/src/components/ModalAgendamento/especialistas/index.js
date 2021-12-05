@@ -17,7 +17,7 @@ const especialistas = () => {
             width="50px"
             height="50px"
             circle
-            image="https://i.pinimg.com/originals/18/d7/ce/18d7ce992955c2e6138c05998cb0ad34.png"
+            image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/1638576785730.png"
             border="1px"
           />
           <Text bold small>Flávia Lemos</Text>

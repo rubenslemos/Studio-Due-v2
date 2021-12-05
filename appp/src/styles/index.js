@@ -83,6 +83,7 @@ padding: ${(props) => (props.hasPadding ? '20px' : '0px')};
 padding-bottom: ${(props) => props.removePaddingBottom ? '0' : props.hasPadding ? '20px' : '0px'};
 margin: ${(props) => props.spacing || 0};
 border-radius: ${(props) => props.rounded || '0px'};
+border: ${(props) => props.border || 'none'};
 background: ${(props) => themes.colors[props.background] || props.background || 'transparent'};
 `;
 

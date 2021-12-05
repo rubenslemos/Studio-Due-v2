@@ -12,7 +12,8 @@
     "cinzaClaro": "#CED4DA",
     "CinzaChumbo": "#343A40",
     "success": "#38B000",
-    "fail": "#BA181B"
+    "fail": "#BA181B",
+    "Black": "#000000"
   },
   "fonts": {
     "regular": {
