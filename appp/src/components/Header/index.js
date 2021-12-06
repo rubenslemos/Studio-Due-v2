@@ -13,11 +13,15 @@ import {
 } from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import themes from '../../styles/themes.json'
+import { useSelector } from 'react-redux';
 const Header = () => {
+
+  const {salao} = useSelector((state) => state.salao)
+  console.log("SALAO: ",salao)
   return (
     <>
       <Cover
-        image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/1638284426667.jpg"
+        image={salao.capa}
         width="100%"
         height="150px">
         <GradientView
