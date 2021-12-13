@@ -229,6 +229,7 @@ export function* allServicos (){
       return false
     }
     yield put(updateColaborador({ servicos: res.servicos}))
+    console.log(res)
   } catch (err) {
     yield put(updateColaborador({
       form: {
