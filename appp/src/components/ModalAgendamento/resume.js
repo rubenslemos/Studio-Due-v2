@@ -8,29 +8,28 @@ import {
   Spacer,
   Titles
 } from '../../styles'
-import moment from 'moment'
-import consts from '../../consts'
-const resume = ({servico}) => {
+
+const resume = () => {
   return(
     <Box 
-    height='100px'
-    hasPadding 
-    background='branco'
-    spacing="20px 0 0"
+      height='100px'
+      hasPadding 
+
+      background='branco'
     >
         <ImageList 
-          image={`${consts.bucketUrl}/${servico?.arquivo[0]?.caminho}`}
+          image="https://blog.beautyclass.tv/wp-content/uploads/2019/07/t%C3%A9cnicas-de-corte-de-cabelo-profissionais.jpg-768x469.jpg"
         />
       
       <Box direction="column">
         <Titles width='100%' align="center" bold color="CinzaChumbo" >
-         {servico?.titulo}
+          Corte cabelo feminino
         </Titles>
         <Spacer/>
         <Spacer/>
         <Spacer/>
         <Text width='100%' align="center" color="headerFnt" >
-          R$ {servico?.preco},00 • Duração: {moment(servico?.duracao).format('HH:mm')}min
+          R$ 200,00 • Tempo med: 40min
         </Text>
       </Box>
     </Box>

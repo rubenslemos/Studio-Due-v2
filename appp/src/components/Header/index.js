@@ -13,16 +13,11 @@ import {
 } from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import themes from '../../styles/themes.json'
-import { useSelector, useDispatch } from 'react-redux';
-import {Linking, Share, TouchableOpacity} from 'react-native'
-import {updateForm} from '../../store/modules/salao/actions'
+import { useSelector } from 'react-redux';
 const Header = () => {
 
-  const dispatch = useDispatch()
-  const {salao, servicos} = useSelector((state) => state.salao)
-  const navegar = () => {
-    Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${salao?.geo?.coordinates[0]},${salao?.geo?.coordinates[1]}`)
-  }
+  const {salao} = useSelector((state) => state.salao)
+  console.log("SALAO: ",salao)
   return (
     <>
       <Cover
@@ -33,9 +28,9 @@ const Header = () => {
           colors={['#21232f33', '#21232fe6']}
           hasPadding
           justify="flex-end">
-          <Badge bold color={salao.isOpened ? 'success' : 'fail'}>{salao.isOpened ? "ABERTO" : "FECHADO"}</Badge>
+          <Badge bold color="success">Aberto</Badge>
           <Title
-            image={salao.foto}
+            image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/studio-due-logo-transparent.png"
             justifyContent="center"
             colors
           />
@@ -44,7 +39,7 @@ const Header = () => {
             bold 
             color="branco"
           >
-            Rua {salao?.endereco?.rua} {salao?.endereco?.numero} {salao?.endereco?.complemento} {salao?.endereco?.bairro} {salao?.endereco?.cidade}  • {salao?.distance} Km
+            • Rua Orenoco 137 loja 4 Carmo-Sion BH
           </Text>
         </GradientView>
       </Cover>
@@ -52,43 +47,35 @@ const Header = () => {
         backgroundColor="branco" width="100%"
       >
         <Box justify="space-between">
-        <Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL(`tel:${salao.telefone}`)}>
-            <Icon name="phone" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 0 0">Ligar</Text>
-          </Touchable><Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL('https://wa.me/5531984609002')}>
+        <Touchable width="62px" direction="column" align="center">
             <Icon name="whatsapp" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">WhatsApp</Text>
           </Touchable>
-          <Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL('https://www.instagram.com/_studiodue_/')}>
+          <Touchable width="62px" direction="column" align="center">
             <Icon name="instagram" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">Instagram</Text>
           </Touchable>
-          <Touchable width="58px" direction="column" align="center" onPress={()=> navegar()}>
-            <Icon name="map-marker" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 0 0">Chegar</Text>
+          <Touchable width="62px" direction="column" align="center">
+            <Icon name="cellphone-basic" size={30} color={themes.colors.headerFnt}/>
+            <Text small spacing="10px 0 0">Ligar</Text>
           </Touchable>          
-          <Touchable width="58px" direction="column" align="flex-start" onPress={() =>Share.share({
-            message:`Salão Studio Due - Melhor salão de beleza da zona Sul de BH - https://www.instagram.com/_studiodue_/`
-          })}>
+          <Touchable width="62px" direction="column" align="center">
             <Icon name="share-variant" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 28px 0 0">Enviar</Text>
+            <Text small spacing="10px 0 0">Compartilhar</Text>
           </Touchable>
         </Box>
-          <Box direction="column" justify="flex-end" spacing="0 0 0 160px">
-            <Button  icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 100 }}>Agendar</Button>
+          <Box direction="column" justify="flex-end" spacing="0 0 0 125px">
+            <Button  icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 132 }}>Agendar Agora</Button>
             <Text small spacing="10px 0 0">Horários Livres</Text>
           </Box>
       </Box>
       <Box direction="column" align="center" hasPadding>
         <Titles small>
-          Serviços ({servicos.length})
+          Serviços (5)
         </Titles>
         <TextInput 
           placeholder="Digite o nome do serviço ..."
           activeOutlineColor= {themes.colors.CinzaChumbo}
-          onChangeText={(value) => dispatch(updateForm({inputFiltro: value}))}
-          onFocus={() => dispatch(updateForm({inputFiltroFoco: true}))}
-          onBlur={() => dispatch(updateForm({inputFiltroFoco: false}))}
         />
       </Box>  
     </>

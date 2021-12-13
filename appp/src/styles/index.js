@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import themes from './themes.json';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import util from '../util'
 import {
@@ -88,7 +87,7 @@ border: ${(props) => props.border || 'none'};
 background: ${(props) => themes.colors[props.background] || props.background || 'transparent'};
 `;
 
-export const Touchable = styled(TouchableOpacity)`
+export const Touchable = styled.TouchableOpacity`
   flex-direction: ${(props) => props.direction || 'row'};
   justify-content: ${(props) => props.items|| 'flex-start'}; 
   align-items: ${(props) => props.align || 'flex-start'};

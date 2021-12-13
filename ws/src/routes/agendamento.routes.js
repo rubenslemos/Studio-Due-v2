@@ -140,7 +140,7 @@ router.post('/filter', async(req, res) => {
                 $lte: moment(periodo.final).endOf('day')
             }
         }).populate([
-            { path: 'servicoId', select: '_id titulo duracao' },
+            { path: 'servicoId', select: '-_id titulo duracao' },
             { path: 'colaboradorId', select: '-_id nome' },
             { path: 'clienteId', select: '-_id nome' }
         ])
@@ -284,7 +284,7 @@ router.post('/dias-disponiveis', async(req, res) => {
         }))
         res.json({
             colaboradores,
-            agenda
+            agenda: agenda
         })
     } catch (err) {
         res.json({ error: true, message: err.message })

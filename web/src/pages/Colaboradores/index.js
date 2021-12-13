@@ -435,7 +435,7 @@ const Colaboradores = () => {
            },
            {
             label: 'Especialidades',
-            key: 'servicos',
+            key: 'servicos'
            },
            { 
              label: 'Vinculo',

@@ -9,7 +9,6 @@
         "culturem",
         "dsphare",
         "immer",
-        "Km",
         "Middlewares",
         "Orenoco",
         "pagarme",
@@ -17,8 +16,6 @@
         "postback",
         "rsuite",
         "serv",
-        "studiodue",
-        "WAZE",
         "zipcode"
     ],
     "editor.formatOnSaveMode": "modificationsIfAvailable",

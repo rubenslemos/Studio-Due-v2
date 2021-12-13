@@ -3,7 +3,7 @@ import {Touchable, GradientView, Text, Box, Titles, Spacer} from '../../styles'
 import {View, StyleSheet} from 'react-native'
 import themes from '../../styles/themes.json'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-const ModalHeader = ({onPress = () => {}, form}) => {
+const ModalHeader = () => {
   return (
     <View style={styles.headerContainer}>
       <GradientView 
@@ -12,7 +12,7 @@ const ModalHeader = ({onPress = () => {}, form}) => {
         end={{x: 1, y: 0}}
       >
         <Box>
-          <Touchable hasPadding align='center' onPress={onPress}>
+          <Touchable hasPadding align='center'>
             <Icon 
               name="chevron-left"
               color={themes.colors.branco}

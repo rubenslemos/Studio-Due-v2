@@ -2,36 +2,21 @@ import React from 'react'
 import {FlatList} from 'react-native-gesture-handler'
 import {Box, Titles, Text, Touchable, Spacer} from '../../styles'
 import util from '../../util'
-import themes from '../../styles/themes.json'
-import moment from 'moment/min/moment-with-locales' 
-moment.locale('pt-br')
-const dateTime = ({  
-  servico,
-  agenda,
-  servicos,
-  agendamento,
-  dataSelecionada,
-  horaSelecionada,
-  horariosDisponiveis
-}) => {
-
+import themes from '../../styles/themes.json' 
+const dateTime = () => {
   return (
     <>
       <Text bold color="sidebarFntSel" align="flex-start" hasPadding>Que dia gostaria de realizar o serviço? </Text>
       <FlatList
         styles={{margin: 20}}
-        data={agenda}
+        data={['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']}
         horizontal
         showsHorizontalScrollIndicator={false}
         keyExtractor={(item)=> item.toString()}
         contentContainerStyle={{paddingLeft: 20}}
-        renderItem={({ item }) =>{ 
-          const date= moment(Object.keys(item)[0])
-          const dateISO = moment(date).format('YYYY-MM-DD')
-          const selected = dateISO === dataSelecionada
-          return(
+        renderItem={({ item }) => (
           <Touchable
-            key={dateISO}
+            key={item}
             border="1px"
             width="70px"
             height="80px"
@@ -40,17 +25,17 @@ const dateTime = ({
             direction="column"
             justify="center"
             align="center"
-            background={selected ? util.toAlpha(themes.colors.headerFnt, 70) : "branco"}
+            background={item === 'c' ? util.toAlpha(themes.colors.headerFnt, 70) : "branco"}
           >
             <Spacer/>
             <Spacer/>
-            <Text small color={selected ? "branco" : undefined}>{util.diasSemana[date.day()]}</Text>
+            <Text small color={item === 'c' ? "branco" : undefined}>Dom</Text>
             <Spacer/>
-            <Titles small color={selected ? "branco" : undefined}>{date.format('DD')}</Titles>
+            <Titles small color={item === 'c' ? "branco" : undefined}>19</Titles>
             <Spacer/>
-            <Text small color={selected ? "branco" : undefined}>{date.format('MMMM')}</Text>
+            <Text small color={item === 'c' ? "branco" : undefined}>Abril</Text>
           </Touchable>
-        )}}
+        )}
       />
       <Text bold color="sidebarFntSel" align="flex-start" hasPadding>Qual horário? </Text>
       <FlatList

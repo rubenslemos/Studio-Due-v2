@@ -135,7 +135,7 @@ router.get('/salao/:salaoId', async(req, res) => {
             })
             servicosSalao.push({...servico._doc, arquivo })
         }
-        res.json({ servicos: servicosSalao.map ((s) =>({
+        res.json({ Servicos: servicosSalao.map ((s) =>({
             ...s
         }))})
     } catch (err) {
