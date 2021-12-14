@@ -4,7 +4,7 @@ import consts from '../../../consts'
 
 const INITIAL_STATE = {
   salao: {},
-  servicos: [],
+  Servicos: [],
   agenda: [],
   colaboradores: [],
   agendamento: {
@@ -37,7 +37,7 @@ function salao (state = INITIAL_STATE, action) {
     }
     case types.UPDATE_SERVICOS: {
       return produce(state, (draft) => {
-        draft.servicos = action.servicos
+        draft.Servicos = draft.Servicos, action.Servicos
       })
     }
     case types.UPDATE_AGENDA: {

@@ -17,11 +17,11 @@ import util from '../../util';
 const ModalAgendamento = () => {
   const dispatch = useDispatch();
 
-  const {form, servicos, agendamento, agenda, colaboradores} = useSelector(
+  const {form, Servicos, agendamento, agenda, colaboradores} = useSelector(
     (state) => state.salao,
   );
 
-  const servico = servicos.filter((s) => s._id === agendamento.servicoId)[0];
+  const servico = Servicos.filter((s) => s._id === agendamento.servicoId)[0];
   const dataSelecionada = moment(agendamento.data).format('YYYY-MM-DD');
   const horaSelecionada = moment(agendamento.data).format('HH:mm');
 
@@ -42,6 +42,7 @@ const ModalAgendamento = () => {
 
   return (
     <BottomSheet
+      ref={sheetRef}
       snapPoints={[0,70, Dimensions.get('window').height-20]}
       enabledBottomClamp
       enabledContentTapInteraction={false}
@@ -69,10 +70,10 @@ const ModalAgendamento = () => {
                 );
               }}
             />
-            <Resume  servicos={servicos} agendamento={agendamento} />
+            <Resume  Servicos={Servicos} agendamento={agendamento} />
             <DateTime
               servico={servico}
-              servicos={servicos}
+              Servicos={Servicos}
               agendamento={agendamento}
               agenda={agenda}
               dataSelecionada={dataSelecionada}

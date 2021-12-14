@@ -9,7 +9,6 @@
    try{
    
     const {data: res} = yield call(api.get,`/salao/${consts.salaoId}`)
-    console.log(res.salao)
     
     if (res.error){
       alert(res.message)
@@ -25,15 +24,13 @@
 
  export function* allServicos(){ 
    try{
-    let res = {}
-    const response = yield call(api.get,`/servico/salao/${consts.salaoId}` )
-    res = response.data
+    const {data: res} = yield call(api.get,`/servico/salao/${consts.salaoId}`)
     if (res.error){
       alert(res.message)
       return false
     }
 
-    yield put(updateServicos(res.servicos))
+    yield put(updateServicos(res.Servicos))
   } 
   catch(err){
     alert(err.message)

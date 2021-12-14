@@ -9,16 +9,16 @@ import {getSalao, allServicos} from '../../store/modules/salao/actions'
 const Home = () => {
 
   const dispatch = useDispatch()
-  const {servicos, form} = useSelector((state) => state.salao);
+  const {Servicos, form} = useSelector((state) => state.salao);
 
   const finalServicos =
     form.inputFiltro.length > 0
-      ? servicos.filter((s) => {
+      ? Servicos.filter((s) => {
           const titulo = s.titulo.toLowerCase().trim();
           const arrSearch = form.inputFiltro.toLowerCase().trim().split(' ');
           return arrSearch.every((w) => titulo.search(w) !== -1);
         })
-      : servicos;
+      : Servicos;
   useEffect(() => {
     dispatch(getSalao())
     dispatch(allServicos())

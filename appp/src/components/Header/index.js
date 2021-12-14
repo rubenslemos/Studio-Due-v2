@@ -17,14 +17,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import themes from '../../styles/themes.json'
 const Header = () => {
   const dispatch = useDispatch();
-  const {salao, servicos, form} = useSelector((state) => state.salao)
-  console.log("Salao", salao)
+  const {salao, Servicos, form} = useSelector((state) => state.salao)
+  console.log("servicos: ", Servicos)
   const openGps = (coords) => {
     Linking.openURL(
       `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${coords[0]},${coords[1]}`,
     )
-  };
-
+  }
   return (
     <>
       <Cover
@@ -46,7 +45,7 @@ const Header = () => {
             bold 
             color="branco"
           >
-            Rua {salao?.endereco?.rua} {salao?.endereco?.numero} {salao?.endereco?.complemento} {salao?.endereco?.bairro} {salao?.endereco?.cidade} • {salao?.endereco?.distance} Km
+            Rua {salao?.endereco?.rua} {salao?.endereco?.numero} {salao?.endereco?.complemento} {salao?.endereco?.bairro} {salao?.endereco?.cidade} • {salao?.distance} Km
           </Text>
         </GradientView>
       </Cover>
@@ -54,35 +53,35 @@ const Header = () => {
         backgroundColor="branco" width="100%"
       >
         <Box justify="space-between">
-        <Touchable width="62px" direction="column" align="center" onPress={() => Linking.openURL('api.whatsapp.com/send?phone5531984609002')}>
+        <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL('api.whatsapp.com/send?phone5531984609002')}>
             <Icon name="whatsapp" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">WhatsApp</Text>
           </Touchable>
-          <Touchable width="62px" direction="column" align="center" onPress={() => Linking.openURL('https://www.instagram.com/_studiodue_/')}>
+          <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL('https://www.instagram.com/_studiodue_/')}>
             <Icon name="instagram" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">Instagram</Text>
           </Touchable>
-          <Touchable width="62px" direction="column" align="center" onPress={() => Linking.openURL(`tel:${salao.telefone}`)}>
+          <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL(`tel:${salao.telefone}`)}>
             <Icon name="cellphone-basic" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">Ligar</Text>
           </Touchable>          
-          <Touchable width="62px" direction="column" align="center" onPress={() => Share.share({message: `${salao.nome} @_studiodue_`})}>
+          <Touchable width="58px" direction="column" align="flex-start" onPress={() => Share.share({message: `${salao.nome} @_studiodue_`})}>
             <Icon name="share-variant" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 0 0">Compartilhar</Text>
+            <Text small spacing="10px 22px 0 0">Enviar</Text>
           </Touchable>          
-          <Touchable width="62px" direction="column" align="center "onPress={() => openGps(salao?.geo?.coordinates)}>
+          <Touchable width="58px" direction="column" align="flex-start" onPress={() => openGps(salao?.geo?.coordinates)}>
             <Icon name="map-marker" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 0 0">Chegar</Text>
+            <Text small spacing="10px 22px 0 0">Chegar</Text>
           </Touchable>
         </Box>
-          <Box direction="column" justify="flex-end" spacing="0 0 0 125px">
-            <Button  icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 132 }}>Agendar Agora</Button>
+          <Box direction="column" justify="flex-end" spacing="0 0 0 175px">
+            <Button  icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 100 }}>Agendar</Button>
             <Text small spacing="10px 0 0">Horários Livres</Text>
           </Box>
       </Box>
       <Box direction="column" align="center" hasPadding>
         <Titles small>
-          Serviços ({servicos.length})
+          Serviços ({Servicos?.length})
         </Titles>
         <TextInput 
           placeholder="Digite o nome do serviço ..."

@@ -9,7 +9,8 @@ import {
   Titles
 } from '../../styles'
 
-const resume = () => {
+const resume = ({Servicos, agendamento}) => {
+  const servico = Servicos?.filter((s)=> s._id === agendamento.servicoId)[0]
   return(
     <Box 
       height='100px'

@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry} from 'react-native';
+import {AppRegistry, LogBox} from 'react-native';
 import {name as appName} from './app.json';
 import {Provider as StoreProvider} from 'react-redux';
 import {fonts} from './src/styles/themes.json';
@@ -10,6 +10,24 @@ import {
 } from 'react-native-paper';
 import Home from './src/pages/Home';
 import store from './src/store';
+
+const warn = console.warn;
+
+function logWarning(...warnings){
+  let showWarning = true;
+  warnings.forEach(warning => {
+    if (warning.includes("UNSAFE_")) showWarning = false;
+    else if (warning.includes("componentWillMount")) showWarning = false;
+    else if (warning.includes("componentWillReceiveProps")) showWarning = false;
+    else if (warning.includes("Animated:")) showWarning = false;
+    else if (warning.includes("Require cycle:")) showWarning = false;
+  });
+  if(showWarning) warn(...warnings);
+}
+
+
+console.warn  = logWarning;
+
 const themes = {
   ...DefaultTheme,
   fonts: configureFonts({
