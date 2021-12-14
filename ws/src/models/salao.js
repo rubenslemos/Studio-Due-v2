@@ -38,8 +38,5 @@ const salao = new Schema({
         default: Date.now,
     }
 })
-mongoose.model('Salao', salao)
 salao.index({ geo: '2dsphare' })
-module.exports = {
-    salao: mongoose.model('Salao', salao)
-}
+module.exports = mongoose.model('Salao', salao)

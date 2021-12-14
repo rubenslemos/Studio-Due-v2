@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppRegistry, LogBox} from 'react-native';
+import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
 import {Provider as StoreProvider} from 'react-redux';
 import {fonts} from './src/styles/themes.json';
@@ -10,8 +10,6 @@ import {
 } from 'react-native-paper';
 import Home from './src/pages/Home';
 import store from './src/store';
-LogBox.ignoreLogs(['Warning: '])
-LogBox.ignoreLogs(['Animated: '])
 const themes = {
   ...DefaultTheme,
   fonts: configureFonts({

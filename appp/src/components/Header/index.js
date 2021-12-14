@@ -13,8 +13,8 @@ import {
 } from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import themes from '../../styles/themes.json'
-import { useSelector } from 'react-redux';
 const Header = () => {
+<<<<<<< HEAD
 
   const {salao, servicos, form} = useSelector((state) => state.salao)
   console.log("Salao", salao)
@@ -23,10 +23,12 @@ const Header = () => {
       `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${coords[0]},${coords[1]}`,
     );
   };
+=======
+>>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
   return (
     <>
       <Cover
-        image={salao.capa}
+        image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/1638284426667.jpg"
         width="100%"
         height="150px">
         <GradientView

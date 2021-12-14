@@ -1,5 +1,5 @@
 import types from './types'
-import produce, {enableES5} from 'immer'
+import produce from 'immer'
 import consts from '../../../consts'
 
 const INITIAL_STATE = {
@@ -23,6 +23,7 @@ const INITIAL_STATE = {
   }
 }
 
+<<<<<<< HEAD
 function salao(state = INITIAL_STATE, action) {
   enableES5()
   switch (action.type) {
@@ -73,6 +74,12 @@ function salao(state = INITIAL_STATE, action) {
     default: {
       return state;
     }
+=======
+function salao (state = INITIAL_STATE, action){
+  switch (action.type){
+    default:
+      return state
+>>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
   }
 }
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
  import {takeLatest, all, call, put, select} from 'redux-saga/effects'
  import api from '../../../services/api'
  import moment from 'moment'
@@ -75,3 +76,8 @@
   takeLatest(types.FILTER_AGENDA, filterAgenda)
 
 ])
+=======
+ import {takeLatest, all} from 'redux-saga/effects'
+
+ export default all ([])
+>>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)

@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {FlatList} from 'react-native';
 import Header from '../../components/Header';
 import '../../config/reactotron';
 import Servico from '../../components/Servico'
 import ModalAgendamento from '../../components/ModalAgendamento';
+<<<<<<< HEAD
 import {useDispatch,  useSelector} from 'react-redux'
 import {getSalao, allServicos} from '../../store/modules/salao/actions'
 const Home = () => {
@@ -24,6 +25,9 @@ const Home = () => {
     dispatch(allServicos())
   },[])
 
+=======
+const Home = () => {
+>>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
   return(
    <>
       <FlatList 

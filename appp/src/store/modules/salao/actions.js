@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import types from './types';
 
 export function getSalao() {
@@ -43,3 +44,5 @@ export function resetAgendamento() {
 export function saveAgendamento() {
   return {type: types.SAVE_AGENDAMENTO};
 }
+=======
+>>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)

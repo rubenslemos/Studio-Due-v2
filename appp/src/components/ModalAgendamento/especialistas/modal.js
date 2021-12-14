@@ -8,7 +8,7 @@ import {Dimensions} from 'react-native'
 const EspecialistasModal = () => {
   return(
     <Modal
-      open={false}
+      open={true}
       closeOnTouchOutside={true}
       modalStyle={{
         borderRadius: 20
