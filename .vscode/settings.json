@@ -16,6 +16,7 @@
         "postback",
         "rsuite",
         "serv",
+        "studiodue",
         "zipcode"
     ],
     "editor.formatOnSaveMode": "modificationsIfAvailable",

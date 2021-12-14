@@ -7,9 +7,10 @@
  import util from '../../../util'
  export function* getSalao(){ 
    try{
-    let res = {}
-    const response = yield call(api.get,`/salao/${consts.salaoId}` )
-    res = response.data
+   
+    const {data: res} = yield call(api.get,`/salao/${consts.salaoId}`)
+    console.log(res)
+    
     if (res.error){
       alert(res.message)
       return false
