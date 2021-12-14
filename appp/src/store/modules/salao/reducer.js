@@ -1,5 +1,5 @@
 import types from './types'
-import produce from 'immer'
+import produce, {enableES5} from 'immer'
 import consts from '../../../consts'
 
 const INITIAL_STATE = {
@@ -22,65 +22,54 @@ const INITIAL_STATE = {
     agendamentoLoading: false
   }
 }
-
-<<<<<<< HEAD
-function salao(state = INITIAL_STATE, action) {
+function salao (state = INITIAL_STATE, action) {
   enableES5()
   switch (action.type) {
     case types.UPDATE_FORM: {
       return produce(state, (draft) => {
-        draft.form = {...draft.form, [action.key]: action.value};
-      });
+        draft.form = {...draft.form, [action.key]: action.value}
+      })
     }
     case types.UPDATE_SALAO: {
       return produce(state, (draft) => {
-        draft.salao = {...draft.salao, ...action.salao};
-      });
+        draft.salao = {...draft.salao, ...action.salao}
+      })
     }
     case types.UPDATE_SERVICOS: {
       return produce(state, (draft) => {
-        draft.servicos = action.servicos;
-      });
+        draft.servicos = action.servicos
+      })
     }
     case types.UPDATE_AGENDA: {
       return produce(state, (draft) => {
-        draft.agenda = [...draft.agenda, ...action.agenda];
-      });
+        draft.agenda = [...draft.agenda, ...action.agenda]
+      })
     }
     case types.UPDATE_COLABORADORES: {
       return produce(state, (draft) => {
         draft.colaboradores = _.uniq([
           ...draft.colaboradores,
           ...action.colaboradores,
-        ]);
-      });
+        ])
+      })
     }
     case types.UPDATE_AGENDAMENTO: {
       return produce(state, (draft) => {
         if (action.key === 'servicoId') {
-          draft.form.modalAgendamento = 2;
+          draft.form.modalAgendamento = 2
         }
-
-        draft.agendamento[action.key] = action.value;
-      });
+        draft.agendamento[action.key] = action.value
+      })
     }
     case types.RESET_AGENDAMENTO: {
       return produce(state, (draft) => {
-        draft.agenda = INITIAL_STATE.agenda;
-        draft.colaboradores = INITIAL_STATE.colaboradores;
-        draft.agendamento = INITIAL_STATE.agendamento;
-      });
+        draft.agenda = INITIAL_STATE.agenda
+        draft.colaboradores = INITIAL_STATE.colaboradores
+        draft.agendamento = INITIAL_STATE.agendamento
+      })
     }
     default: {
-      return state;
-    }
-=======
-function salao (state = INITIAL_STATE, action){
-  switch (action.type){
-    default:
       return state
->>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
-  }
-}
-
-export default salao;
+    }
+}}
+export default salao

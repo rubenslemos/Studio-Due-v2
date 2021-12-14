@@ -42,11 +42,6 @@ const ModalAgendamento = () => {
 
   return (
     <BottomSheet
-<<<<<<< HEAD
-      ref={sheetRef}
-=======
-      initialSnap={2}
->>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
       snapPoints={[0,70, Dimensions.get('window').height-20]}
       enabledBottomClamp
       enabledContentTapInteraction={false}

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const types = {
   GET_SALAO: '@salao/GET_SALAO',
   UPDATE_SALAO: '@salao/UPDATE',
@@ -13,10 +12,4 @@ const types = {
   SAVE_AGENDAMENTO: '@salao/SAVE_AGENDAMENTO',
 };
 
-export default types;
-=======
-const types ={
-
-}
 export default types
->>>>>>> parent of 2f146e3 (erro pra pegar infos do salao)
