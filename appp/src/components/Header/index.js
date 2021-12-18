@@ -1,6 +1,4 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Linking, Share} from 'react-native';
 import {
   Cover, 
   GradientView,
@@ -15,14 +13,15 @@ import {
 } from '../../styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import themes from '../../styles/themes.json'
+import {useDispatch, useSelector} from 'react-redux';
+import {Linking, Share} from 'react-native';
+import {updateForm} from '../../store/modules/salao/actions';
 const Header = () => {
   const dispatch = useDispatch();
-  const {salao, Servicos, form} = useSelector((state) => state.salao)
-  console.log("servicos: ", Servicos)
-  const openGps = (coords) => {
-    Linking.openURL(
-      `https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${coords[0]},${coords[1]}`,
-    )
+  const {salao, servicos} = useSelector((state) => state.salao)
+  
+  const navegar = () => {
+    Linking.openURL(`https://www.google.com/maps/dir/?api=1&travelmode=driving&dir_action=navigate&destination=${salao?.geo?.coordinates[0]},${salao?.geo?.coordinates[1]}`)
   }
   return (
     <>
@@ -34,7 +33,7 @@ const Header = () => {
           colors={['#21232f33', '#21232fe6']}
           hasPadding
           justify="flex-end">
-          <Badge bold color="success">Aberto</Badge>
+           <Badge bold color={salao.isOpened ? 'success' : 'fail'}>{salao.isOpened ? "ABERTO" : "FECHADO"}</Badge>
           <Title
             image={salao.foto}
             justifyContent="center"
@@ -53,46 +52,49 @@ const Header = () => {
         backgroundColor="branco" width="100%"
       >
         <Box justify="space-between">
-        <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL('api.whatsapp.com/send?phone5531984609002')}>
+          <Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL(`tel:${salao.telefone}`)}>
+            <Icon name="phone" size={30} color={themes.colors.headerFnt}/>
+            <Text small spacing="10px 0 0">Ligar</Text>
+          </Touchable>
+          <Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL('https://wa.me/5531984609002')}>
             <Icon name="whatsapp" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">WhatsApp</Text>
           </Touchable>
-          <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL('https://www.instagram.com/_studiodue_/')}>
+          <Touchable width="58px" direction="column" align="center" onPress={() =>Linking.openURL('https://www.instagram.com/_studiodue_/')}>
             <Icon name="instagram" size={30} color={themes.colors.headerFnt}/>
             <Text small spacing="10px 0 0">Instagram</Text>
-          </Touchable>
-          <Touchable width="58px" direction="column" align="center" onPress={() => Linking.openURL(`tel:${salao.telefone}`)}>
-            <Icon name="cellphone-basic" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 0 0">Ligar</Text>
-          </Touchable>          
-          <Touchable width="58px" direction="column" align="flex-start" onPress={() => Share.share({message: `${salao.nome} @_studiodue_`})}>
-            <Icon name="share-variant" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 22px 0 0">Enviar</Text>
-          </Touchable>          
-          <Touchable width="58px" direction="column" align="flex-start" onPress={() => openGps(salao?.geo?.coordinates)}>
+          </Touchable>    
+          <Touchable width="58px" direction="column" align="center" onPress={()=> navegar()}>
             <Icon name="map-marker" size={30} color={themes.colors.headerFnt}/>
-            <Text small spacing="10px 22px 0 0">Chegar</Text>
+            <Text small spacing="10px 0 0">Chegar</Text>
+          </Touchable>          
+          <Touchable width="58px" direction="column" align="flex-start" onPress={() =>Share.share({
+            message:`Salão Studio Due - Melhor salão de beleza da zona Sul de BH - https://www.instagram.com/_studiodue_/`
+          })}>
+            <Icon name="share-variant" size={30} color={themes.colors.headerFnt}/>
+            <Text small spacing="10px 28px 0 0">Enviar</Text>
           </Touchable>
         </Box>
-          <Box direction="column" justify="flex-end" spacing="0 0 0 175px">
+        <Box direction="column" justify="flex-end" spacing="0 0 0 160px">
             <Button  icon="clock-check-outline" background="sidebarBg" mode="contained" uppercase={false} style={{width: 100 }}>Agendar</Button>
             <Text small spacing="10px 0 0">Horários Livres</Text>
           </Box>
       </Box>
       <Box direction="column" align="center" hasPadding>
         <Titles small>
-          Serviços ({Servicos?.length})
+          Serviços ({servicos.length})
         </Titles>
         <TextInput 
           placeholder="Digite o nome do serviço ..."
-          onChangeText={(value) => dispatch(updateForm('inputFiltro', value))}
-          onFocus={() => dispatch(updateForm('inputFiltroFoco', true))}
-          onBlur={() => dispatch(updateForm('inputFiltroFoco', false))}
           activeOutlineColor= {themes.colors.CinzaChumbo}
+          onChangeText={(value) => dispatch(updateForm({inputFiltro: value}))}
+          onFocus={() => dispatch(updateForm({inputFiltroFoco: true}))}
+          onBlur={() => dispatch(updateForm({inputFiltroFoco: false}))}
+          
         />
       </Box>  
     </>
-  );
-};
+  )
+}
 
 export default Header

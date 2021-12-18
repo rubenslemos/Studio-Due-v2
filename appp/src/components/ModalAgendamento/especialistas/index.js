@@ -1,11 +1,18 @@
 
 import React from 'react'
 import {FlatList} from 'react-native-gesture-handler'
-import {Box, Cover, Text, Button, Spacer} from '../../../styles'
+import {Box, Cover, Text, Button, Spacer, Touchable} from '../../../styles'
 import util from '../../../util'
 import themes from '../../../styles/themes.json' 
+import {useDispatch} from 'react-redux'
+import { updateForm } from '../../../store/modules/salao/actions'
 
-const especialistas = () => {
+const Especialistas = ({colaboradores, agendamento}) => {
+  
+  const colaborador = colaboradores.filter((c) => c._id === agendamento.colaboradorId)[0]
+
+  dispatch = useDispatch()
+
   return (
     <>
       <Text bold color="sidebarFntSel" align="flex-start" spacing="20px 20px 0 20px ">
@@ -17,26 +24,31 @@ const especialistas = () => {
             width="50px"
             height="50px"
             circle
-            image="https://salao-studio-due.s3.sa-east-1.amazonaws.com/servicos/61607e0ec1bb4c1e46cc5830/1638576785730.png"
+            image={colaborador?.foto}
             border="1px"
           />
-          <Text bold small>Flávia Lemos</Text>
+          <Text bold>{colaborador?.nome}</Text>
         </Box>
         <Box>
-          <Button
-            icon="sync"
-            uppercase={false}
-            textColor="headerBg"
-            background={util.toAlpha(themes.colors.headerFnt, 70)}
-            mode="contained"
-            block
-          >
+          <Touchable 
+            onPress={() => dispatch(updateForm({modalEspecialista: true}))}
+            spacing="10px 0 0 0"
+          >         
+            <Button
+              icon="sync"
+              uppercase={false}
+              textColor="headerBg"
+              background={util.toAlpha(themes.colors.headerFnt, 70)}
+              mode="contained"
+              block
+            >
             Trocar de Especialista
           </Button>
+          </Touchable>
         </Box>
       </Box>
     </>
     )
 }
 
-export default especialistas
+export default Especialistas

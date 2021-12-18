@@ -21,7 +21,7 @@ router.get('/servicos/:salaoId', async(req, res) => {
             status: 'A'
         }).select('_id titulo')
         res.json({
-            Servicos: servicos.map((s) => ({ label: s.titulo, value: s._id }))
+            servicos: servicos.map((s) => ({ label: s.titulo, value: s._id }))
         })
     } catch (err) {
         res.json({ error: true, message: err.message })

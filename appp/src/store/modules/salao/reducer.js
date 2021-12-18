@@ -1,10 +1,10 @@
 import types from './types'
 import produce, {enableES5} from 'immer'
 import consts from '../../../consts'
-
+import _ from 'lodash'
 const INITIAL_STATE = {
   salao: {},
-  Servicos: [],
+  servicos: [],
   agenda: [],
   colaboradores: [],
   agendamento: {
@@ -25,47 +25,41 @@ const INITIAL_STATE = {
 function salao (state = INITIAL_STATE, action) {
   enableES5()
   switch (action.type) {
-    case types.UPDATE_FORM: {
-      return produce(state, (draft) => {
-        draft.form = {...draft.form, [action.key]: action.value}
-      })
-    }
     case types.UPDATE_SALAO: {
       return produce(state, (draft) => {
         draft.salao = {...draft.salao, ...action.salao}
       })
     }
     case types.UPDATE_SERVICOS: {
+      enableES5()
       return produce(state, (draft) => {
-        draft.Servicos = draft.Servicos, action.Servicos
+        draft.servicos = action.servicos
+      })
+    }    
+    case types.UPDATE_FORM: {
+      return produce(state, (draft) => {
+        draft.form = {...state.form, ...action.form};
+      });
+    }
+    case types.UPDATE_AGENDA:{
+      return produce(state, (draft) => {
+        draft.agenda = [...state.agenda, ...action.agenda]
       })
     }
-    case types.UPDATE_AGENDA: {
+    case types.UPDATE_AGENDAMENTO:{
       return produce(state, (draft) => {
-        draft.agenda = [...draft.agenda, ...action.agenda]
+        if(action.agendamento.servicoId){
+          draft.form.modalAgendamento =2
+        }
+        draft.agendamento = {...state.agendamento, ...action.agendamento}
       })
     }
     case types.UPDATE_COLABORADORES: {
       return produce(state, (draft) => {
         draft.colaboradores = _.uniq([
-          ...draft.colaboradores,
-          ...action.colaboradores,
+          ...state.colaboradores,
+          ...action.colaboradores
         ])
-      })
-    }
-    case types.UPDATE_AGENDAMENTO: {
-      return produce(state, (draft) => {
-        if (action.key === 'servicoId') {
-          draft.form.modalAgendamento = 2
-        }
-        draft.agendamento[action.key] = action.value
-      })
-    }
-    case types.RESET_AGENDAMENTO: {
-      return produce(state, (draft) => {
-        draft.agenda = INITIAL_STATE.agenda
-        draft.colaboradores = INITIAL_STATE.colaboradores
-        draft.agendamento = INITIAL_STATE.agendamento
       })
     }
     default: {

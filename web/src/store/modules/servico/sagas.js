@@ -25,7 +25,7 @@ export function* allServicos (){
       return false
     }
     yield put(updateServico({
-      servicos: res.Servicos
+      servicos: res.servicos
     }))
   } catch (err) {
     // eslint-disable-next-line no-unused-expressions
@@ -83,7 +83,7 @@ export function* addServico (){
   }
 }
 export function* removeServico (){ 
-  const { form, servico, components } = yield select(state => state.Servicos)
+  const { form, servico, components } = yield select(state => state.servicos)
   try {
     yield put(updateServico({
       form: {
@@ -122,7 +122,7 @@ export function* removeServico (){
 }
 
 export function* removeArquivo (payload){ 
-  const { form } = yield select(state => state.Servicos)
+  const { form } = yield select(state => state.servicos)
   try {
     yield put(updateServico({ form: { ...form, saving: true }}))
 

@@ -144,7 +144,10 @@ router.post('/filter', async(req, res) => {
             { path: 'colaboradorId', select: '-_id nome' },
             { path: 'clienteId', select: '-_id nome' }
         ])
-        res.json({ agendamentos })
+        res.json({ 
+            agendamentos,
+            agendamento: agendamentos
+        })
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
@@ -266,7 +269,7 @@ router.post('/dias-disponiveis', async(req, res) => {
                 if (totalEspecialistas > 0) {
                     colaboradores.push(Object.keys(todosHorariosDia))
                     agenda.push({
-                        [lastDay.format('DD-MM-YYYY')]: todosHorariosDia
+                        [lastDay.format('YYYY-MM-DD')]: todosHorariosDia
                     })
                 }
 
@@ -277,7 +280,7 @@ router.post('/dias-disponiveis', async(req, res) => {
         colaboradores = _.uniq(colaboradores.flat())
         colaboradores = await colaborador.find({
             _id: { $in: colaboradores }
-        }).select('nome foto -_id')
+        }).select('nome foto _id')
         colaboradores = colaboradores.map(c => ({
             ...c._doc,
             nome: c.nome.split(' ')[0]

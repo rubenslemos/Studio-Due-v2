@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import themes from './themes.json';
 import LinearGradient from 'react-native-linear-gradient';
+import {TouchableOpacity} from 'react-native-gesture-handler'
 import util from '../util'
 import {
   Text as TextPaper,
@@ -87,7 +88,7 @@ border: ${(props) => props.border || 'none'};
 background: ${(props) => themes.colors[props.background] || props.background || 'transparent'};
 `;
 
-export const Touchable = styled.TouchableOpacity`
+export const Touchable = styled(TouchableOpacity)`
   flex-direction: ${(props) => props.direction || 'row'};
   justify-content: ${(props) => props.items|| 'flex-start'}; 
   align-items: ${(props) => props.align || 'flex-start'};
@@ -120,6 +121,7 @@ export const Titles = styled(TitlePaper)`
   letter-spacing: -0.8px;
   line-height: ${(props) => (props.small ? '22px' : '30px')};
   text-align: ${(props) => props.align || 'left'};
+  font-family: ${(props) => (props.bold ? 'Ubuntu-Bold' : 'Ubuntu-Regular')}
 `
 
 export const TextInput = styled(TextInputPaper).attrs({
@@ -145,7 +147,7 @@ export const ImageList = styled.Image.attrs((props) => ({
   height: ${(props) => props.height || '70px'};
   margin: ${(props) => props.spacing || '0 10px 0  0'};
   border-radius: ${(props) => (props.circle ? props.width : '10px')};
-  background-color: ${themes.colors.headerFnt};
+  background-color: ${themes.colors.branco};
   opacity: 0.7;
 `;
 

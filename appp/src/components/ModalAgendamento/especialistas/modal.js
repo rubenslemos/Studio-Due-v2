@@ -1,15 +1,39 @@
 import React from "react"
 import { ScrollView } from "react-native-gesture-handler"
+import {Dimensions} from 'react-native'
 import Modal from 'react-native-simple-modal'
+import {useDispatch} from 'react-redux'
+import { updateForm, updateAgendamento } from "../../../store/modules/salao/actions"
 import {Text, Cover, Box, Touchable, Spacer} from '../../../styles'
 import themes from '../../../styles/themes.json'
 import util from '../../../util'
-import {Dimensions} from 'react-native'
-const EspecialistasModal = () => {
+import moment from 'moment/min/moment-with-locales'
+moment.locale('pt-br')
+const EspecialistasModal = ({
+  form,
+  colaboradores,
+  agendamento,
+  servicos,
+  servico,
+  colaboradoresDia,
+  horaSelecionada
+}) => {
+  const dispatch = useDispatch()
+  // let colaboradoresIdsDisponiveis =[]
+  // for(let colaboradorId of Object.keys(colaboradoresDia)) {
+  //   let horarios = colaboradoresDia[colaboradorId].flat(2)
+  //   if (horarios.includes(horaSelecionada)){
+  //     colaboradoresDisponiveis.push(colaboradorId)
+  //   }
+  // }
+  // const colaboradoresDisponiveis = colaboradores.filter((c) => colaboradoresDisponiveis.includes(c._id))
+
   return(
     <Modal
-      open={true}
-      closeOnTouchOutside={true}
+      open={form.modalEspecialista}
+      close={form.modalEspecial}
+      modalDidClose={() => dispatch(updateForm({modalEspecialista: false}))}
+      closeOnTouchOutside={() => dispatch(updateForm({modalEspecialista: false}))}
       modalStyle={{
         borderRadius: 20
       }}

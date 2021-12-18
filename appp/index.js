@@ -24,7 +24,10 @@ function logWarning(...warnings){
   });
   if(showWarning) warn(...warnings);
 }
-
+LogBox.ignoreLogs(['Warning: '])
+LogBox.ignoreLogs(['Animated: '])
+LogBox.ignoreLogs(['Deprecation warning: '])
+LogBox.ignoreLogs(['Require cycle: '])
 
 console.warn  = logWarning;
 
