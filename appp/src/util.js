@@ -47,3 +47,7 @@ export default {
     bucketURL: 'https://salao-na-mao.s3.amazonaws.com',
   },
 };
+
+// 💡 react-native-simple-modal is on GitHub! To draft an issue based on your patch run
+
+//     npx patch-package react-native-simple-modal --create-issue
