@@ -51,7 +51,7 @@ const Payment = () => {
       </Box>
     </Touchable>    
     <Touchable direction="column" width={(Dimensions.get('window').width-40)+"px"}>
-    <Box border={`1px solid ${themes.colors.cinzaClaro}`} spacing="0 20px 0 0" align="center" rounded="5px">
+    <Box border={`1px solid ${themes.colors.cinzaClaro}`} spacing="0 10px 0 0" align="center" rounded="5px" >
         <Image
           source={{
             uri:'https://www.uniprimebr.com.br/imagens/artigos/capas/2018.01.25-13.39.41.png'
@@ -65,21 +65,8 @@ const Payment = () => {
           }}
         />
         <Text align="center" spacing="10px"> **** **** **** **** 4587</Text>
-        <Text align="center" justify="flex-end" spacing="10px 10px 10px 80px"><Icon name="cog" color={themes.colors.headerFnt} size={25} /></Text>
-        
+        <Text align="center" justify="flex-end" spacing="10px 10px 10px 83px"><Icon name="cog" color={themes.colors.headerFnt} size={25} /></Text>
       </Box>
-      <Spacer/>
-      <Spacer/>
-          <Button
-            icon="check-bold"
-            uppercase={false}
-            textColor="headerBg"
-            background={util.toAlpha(themes.colors.headerFnt, 70)}
-            mode="contained"
-            block
-          >
-            Confirmar Agendamento
-          </Button>
     </Touchable>
     </Box>
    </>

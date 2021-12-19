@@ -63,7 +63,7 @@ export const Title = styled.ImageBackground.attrs((props) => ({
 
 export const Text = styled(TextPaper)`
   color: ${(props) => themes.colors[props.color || 'headerFnt']};
-  font-size: ${(props) => (props.small ? '13px' : '17px')};
+  font-size: ${(props) => (props.small ? '13px' : props.big ?'20px' : '17px')};
   font-family: ${(props) => (props.bold ? 'Ubuntu-Bold' : 'Ubuntu-Light')};
   margin: ${(props) => props.spacing || 0};
   padding: ${(props) => (props.hasPadding ? '20px' : '0px')};

@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "adb reverse tcp:9090 tcp:9090 && react-native start ",
+    "postinstall": "patch-package",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -15,6 +16,7 @@
     "eslint-plugin-react-native": "^3.11.0",
     "immer": "^9.0.7",
     "moment": "^2.29.1",
+    "patch-package": "^6.4.7",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-native": "0.63.3",

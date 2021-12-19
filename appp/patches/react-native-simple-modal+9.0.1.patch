@@ -1,0 +1,38 @@
+diff --git a/node_modules/react-native-simple-modal/index.js b/node_modules/react-native-simple-modal/index.js
+index 3ae8a95..44a3b1a 100644
+--- a/node_modules/react-native-simple-modal/index.js
++++ b/node_modules/react-native-simple-modal/index.js
+@@ -5,12 +5,13 @@ import {
+   View,
+   ViewPropTypes,
+   StyleSheet, 
+-  TouchableOpacity,
+   Animated,
+   Platform,
+   BackHandler
+ } from 'react-native';
+ 
++import {TouchableOpacity} from 'react-native-gesture-handler'
++
+ class Modal extends Component {
+   static propTypes = {
+     open: PropTypes.bool,
+@@ -146,7 +147,7 @@ class Modal extends Component {
+         {...this.props.containerProps}
+       >
+         <TouchableOpacity
+-          style={styles.absolute}
++          style={styles.touchableOpacity}
+           disabled={!this.props.closeOnTouchOutside}
+           onPress={this.close}
+           activeOpacity={0.75}
+@@ -214,6 +215,9 @@ const styles = StyleSheet.create({
+     left: 0,
+     height: 0,
+     width: 0
++  },
++  touchableOpacity:{
++	height: 1500,
+   }
+ });
+ 

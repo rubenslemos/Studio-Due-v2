@@ -1,8 +1,9 @@
  import {takeLatest, all, call, put, select} from 'redux-saga/effects'
  import api from '../../../services/api'
+ import {Alert} from 'react-native'
  import moment from 'moment'
  import consts from '../../../consts'
- import {updateSalao, updateServicos, updateAgenda, updateColaboradores, updateAgendamento} from './actions'
+ import {updateSalao, updateServicos, updateAgenda, updateColaboradores, updateAgendamento, updateForm} from './actions'
  import types from './types'
  import util from '../../../util'
  export function* getSalao(){ 
@@ -63,9 +64,31 @@ export function* filterAgenda(){
     alert(err.message)
   }
 }
+
+export function* saveAgendamento(){ 
+  try{
+    yield put(updateForm({agendamentoLoading: true}))
+
+    const {agendamento} = yield select((state) => state.salao)
+    const {data: res} = yield call(api.post,`/agendamento`, agendamento )
+    if (res.error){
+      alert(res.message)
+      return false
+    }
+    
+    alert('Agendamento realizado com sucesso')
+
+    yield put(updateForm({agendamentoLoading: false}))
+  } 
+  catch(err){
+    alert(err.message)
+  }
+}
+
  export default all ([
   takeLatest(types.GET_SALAO, getSalao),
   takeLatest(types.ALL_SERVICOS, allServicos),
-  takeLatest(types.FILTER_AGENDA, filterAgenda)
+  takeLatest(types.FILTER_AGENDA, filterAgenda),
+  takeLatest(types.SAVE_AGENDAMENTO, saveAgendamento)
 ])
 
