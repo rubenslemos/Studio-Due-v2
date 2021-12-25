@@ -4,24 +4,17 @@ import { useEffect } from 'react'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import moment from 'moment'
 import { useDispatch, useSelector } from 'react-redux'
-import { filterAgendamentos, addAgendamento, resetAgendamento, updateAgendamento } from '../../store/modules/agendamento/actions'
-import { Drawer, TagPicker, Checkbox, Modal, Button, DatePicker} from 'rsuite'
+import { filterAgendamentos, addAgendamento, updateAgendamento, updateAgendamentos, allClientes } from '../../store/modules/agendamento/actions'
+import { Drawer, TagPicker, Modal, Button, DatePicker, SelectPicker} from 'rsuite'
 import RemindFillIcon from '@rsuite/icons/RemindFill'
 import util from '../../util'
 const localizer = momentLocalizer(moment)
 const Agendamentos = () => {
   const dispatch = useDispatch()
-  const { agendamentos, components, behavior, form } = useSelector((state)=> state.agendamento)
-
-  // const formatEventos =agendamentos.map((agendamento) => ({
-  //   title: `Servico: ${agendamento.servicoId.titulo} - Cliente: ${agendamento.clienteId.nome} - Colaborador: ${agendamento.colaboradorId.nome}`,
-  //   start: moment(agendamento.data).toDate(),
-  //   end: moment(agendamento.data).add(
-  //     util.hourToMinutes(
-  //       moment(agendamento.servicoId.duracao).format('HH:mm')
-  //     ), 'minutes'
-  //   ).toDate()    
-  // }))
+  const { agendamentos, components, behavior, form, agendamento, clientes } = useSelector((state)=> state.agendamento)
+  console.log('agendamento',agendamento)
+  console.log('agendamentos',agendamentos)
+  console.log('clientes',clientes)
   const formatEventos = () => {
     let listaEventos = [] 
     agendamentos.length>0 && agendamentos.map((agendamento) => {
@@ -39,20 +32,34 @@ const Agendamentos = () => {
         .toDate()
     })
     })
-    console.log('formatEventos', listaEventos)
     return listaEventos
   }
-  console.log('Agendamentos', agendamentos)
+
   const setComponents = (component, state) => {
     dispatch(
-      updateAgendamento({
+      updateAgendamentos({
         components: { ...components, [component]: state },
       })
     )
   }
-  const setAgendamentos = (key, value) => {
-    dispatch( updateAgendamento({ horario: { ...agendamentos, [key]: value }}))
+  const setAgendamento = (key, value) => {
+    dispatch(updateAgendamentos({
+      agendamento: {
+        ...agendamento,
+        [key]: value
+      }
+    }))
   }
+  const setClienteId = (key, value) => {
+    dispatch(
+      updateAgendamentos({
+        agendamento: {
+          ...agendamento,
+          clienteId: { ...agendamento.clienteId, [key]: value },
+        },
+      })
+    );
+  };
   const onHorarioClick = (horario) => {
     dispatch(
       updateAgendamento({
@@ -86,33 +93,74 @@ const Agendamentos = () => {
        moment().weekday(0).format('YYYY-MM-DD'),
        moment().weekday(6).format('YYYY-MM-DD')
     ))
+    dispatch(allClientes())
   },[dispatch])
   return (
     <div className="col p-5 overflow-auto h-100">
-      <Drawer 
+     <Drawer 
       open={components.drawer} 
       onClose={() => setComponents('drawer', false)}
       size="sm"
       className="drawer" 
       >
         <Drawer.Body className="drawer">
-          <h2>{behavior === 'create'  ? 'Cadastrar novo': 'Atualizar '} Horario</h2>
+          <h2>{behavior === 'create'  ? 'Cadastrar novo': 'Atualizar '} Agendamento</h2>
           <div className="row mt-3">
-            <div className="form-group col-12">
+          <div className="form-group col-12">
+            <p>Cliente</p>
+            <SelectPicker
+              size="lg"
+              block
+              data={clientes}
+              disable={form.disabled && behavior === 'create'}
+              value={agendamento.clienteId.nome}
+              onChange= {(value) => {
+                setClienteId('nome', value)
+              }}
+            />
+          </div>          
+          <div className="form-group col-12">
+            <p>Servico</p>
+            <TagPicker
+              size="lg"
+              block
+              data={agendamentos}
+              
+              value={agendamentos?.clienteId?.nome}
+              onChange= {(cliente) => setAgendamento('clienteId.nome', cliente)}
+            />
+          </div>
+          <div className="form-group col-6">
+            <p>Dia</p>
+              <DatePicker
+                block
+                format="DD-MM-YYYY"
+                hideMinutes={(min) => ![0, 30].includes(min)}
+                onChange={(e) => {}}
+              />
+          </div>
+          <div className="form-group col-6">
+            <p>Horário</p>  
+              <DatePicker
+                block
+                format="HH:mm"
+                hideMinutes={(min) => ![0, 30].includes(min)}
+                onChange={(e) => {
 
-            </div>
-            <div className="form-group col-6">
+                }}
+              />
+          </div>          
 
-            </div>
-            <div className="form-group col-6">
+              <div className="col-12">
+              <p>Colaboradores disponíveis</p>
+              <TagPicker
+                size="lg"
+                block
 
-            </div>          
-            <div className="col-12">
-
-            </div>
-
-            <div className="col-12">
-
+                onChange={(e) => {
+                  
+                }}
+              />
             </div>
             <div className="form-group col-12">
               <p></p>
@@ -121,19 +169,20 @@ const Agendamentos = () => {
                 loading={form.saving}
                 onClick={() => save()}
               >
-                {behavior === 'create' ? "Salvar" : "Atualizar"} Horario
+                {behavior === 'create' ? "Salvar" : "Atualizar"} Agendamento
               </button> 
-              <p></p>
-              {behavior ==='update' && (
-              <button
-                className="button mx-auto save"
-                loading={form.saving}
-                onClick={() => {
-                  setComponents('confirmDelete', true);
-                }}
-              >
-                Remover horario
-              </button>)}
+            <p></p>
+            {behavior ==='update' && (
+            <button
+            className="button mx-auto save"
+            loading={form.saving}
+            onClick={() => {
+                setComponents('confirmDelete', true);
+              }
+            }
+            >
+            Remover horario
+          </button>)}
             </div>
           </div>
         </Drawer.Body>
@@ -196,13 +245,12 @@ const Agendamentos = () => {
               <button 
                 className="button"
                 onClick={() =>{
-                  dispatch(resetAgendamento())
-                  dispatch(updateAgendamento({                  
+                  dispatch(updateAgendamentos({                  
                     behavior: 'create',
                     components: {
-                      ...components
-                  }}))
-                  setComponents('drawer', true)
+                      ...components,
+                      drawer: true
+                    }}))
                 }}
                 >
                 <span className="mdi mdi-calendar-multiple-check"> Novo Agendamento</span>

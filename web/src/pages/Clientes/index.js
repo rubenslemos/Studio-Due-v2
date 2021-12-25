@@ -11,7 +11,7 @@ import {
   resetCliente,
   unlinkCliente
 } from '../../store/modules/cliente/actions'
-import { Drawer, Modal, Button } from 'rsuite'
+import { Drawer, Modal, Button, DatePicker } from 'rsuite'
 import RemindFillIcon from '@rsuite/icons/RemindFill'
 const Clientes = () => {
   
@@ -128,17 +128,14 @@ const Clientes = () => {
           </div>
           <div className="form-group col-6">
             <p>Data Nascimento</p>
-            <div className="input-group">
-              <input 
-                type="text"
-                onfocus="(this.type='date')"
+              <DatePicker 
+                block
+                size="lg"
                 disabled={form.disabled}
-                className="form-control"
-                placeholder={moment(cliente.nascimento).format('DD/MM/YYYY')}
-                value={moment(cliente.nascimento).format('DD/MM/YYYY')}
-                onChange={(e) => setCliente('nascimento', e.target.value)}
+                placeholder={cliente.nascimento === "" || null ? `Nascimento` : moment(cliente.nascimento).format("DD-MM-YYYY")}
+                onChange={(e) => setCliente('nascimento', moment(e).format("YYYY-MM-DD"))}
               />
-            </div>
+
  	        </div>
           <div className="form-group col-6">
             <p>Sexo</p>

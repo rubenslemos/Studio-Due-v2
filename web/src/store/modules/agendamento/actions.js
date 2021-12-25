@@ -13,6 +13,12 @@ export function updateAgendamento(agendamentos){
     agendamentos
   }
 }
+export function updateAgendamentos(agendamento){
+  return {
+    type: types.UPDATE_AGENDAMENTOS, 
+    agendamento
+  }
+}
 
 export function addAgendamento(){
   return {
@@ -25,3 +31,4 @@ export function resetAgendamento(){
     type: types.RESET_AGENDAMENTO
   }
 }
+export function allClientes(){ return { type: types.ALL_CLIENTES } }

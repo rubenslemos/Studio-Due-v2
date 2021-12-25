@@ -3,8 +3,10 @@ const router = express.Router()
 const Salao = require('../models/salao')
 const Servico = require('../models/servico')
 const Horario = require('../models/horario')
+const Cliente = require('../models/cliente')
 const turf = require('@turf/turf')
 const util = require('../util')
+const cliente = require('../models/cliente')
 router.post('/', async(req, res) => {
     try {
         const Salao = await new Salao(req.body).save()
@@ -38,6 +40,20 @@ router.get('/:id', async(req, res) => {
       
           const isOpened = await util.isOpened(horarios)
         res.json({salao: { ...salao._doc, distance, isOpened }})
+    } catch (err) {
+        res.json({ error: true, message: err.message })
+    }
+})
+router.get('/cliente/:salaoId', async(req, res) => {
+    try {
+        const { salaoId } = req.params
+        const clientes = await cliente.find({
+            salaoId,
+            status: 'A'
+        }).select('nome')
+        res.json({
+            cliente: clientes.map((c) => ({ label: c.nome }))
+        })
     } catch (err) {
         res.json({ error: true, message: err.message })
     }
