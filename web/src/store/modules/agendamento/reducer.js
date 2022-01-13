@@ -1,6 +1,7 @@
 import types from './types'
 import produce from 'immer'
 import consts from '../../../consts'
+import _ from 'lodash'
 const INITIAL_STATE = {
   behavior: 'create',
   components:{
@@ -13,26 +14,18 @@ const INITIAL_STATE = {
     disabled: true,
     saving: false
   },
-  agendamento:{
-    clienteId: {
-      nome: ''
-    },
-    salaoId: consts.salaoId,
-    servicoId:{
-      titulo:'',
-      duracao: ''
-    },
-    colaboradorId:{
-      nome: ''
-    },
-    data: '',
-    valor: '',
-    comissao: '',
-    transactionId: '',
-    dataCadastro: ''
-  },
   agendamentos: [],
-  clientes:[]
+  agendamento:{
+    salaoId: consts.salaoId,
+    clienteId: null,
+    servicoId:null,
+    colaboradorId:null,
+    data:null
+  },
+  clientes:[],
+  servicos:[],
+  agenda:[],
+  colaboradores:[]
 }
 function agendamento(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -55,7 +48,27 @@ function agendamento(state = INITIAL_STATE, action) {
         return draft
       })
     } 
-    default: return state
+    case types.UPDATE_FORM: {
+      return produce(state, (draft) => {
+        draft.form = {...state.form, ...action.form};
+      });
+    }
+    case types.UPDATE_COLABORADORES: {
+      return produce(state, (draft) => {
+        draft.colaboradores = _.uniq([
+          ...state.colaboradores,
+          ...action.colaboradores
+        ])
+      })
+    }
+    case types.UPDATE_AGENDA:{
+      return produce(state, (draft) => {
+        draft.agenda = [...state.agenda, ...action.agenda]
+      })
+    }    
+    default: {
+      return state
+    }
   }
 }
 export default agendamento

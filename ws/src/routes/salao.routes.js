@@ -23,7 +23,7 @@ router.get('/servicos/:salaoId', async(req, res) => {
             status: 'A'
         }).select('_id titulo')
         res.json({
-            servicos: servicos.map((s) => ({ label: s.titulo, value: s._id }))
+            servicos: servicos.map((s) => ({ label: s.titulo, value: s._id}))
         })
     } catch (err) {
         res.json({ error: true, message: err.message })
@@ -52,7 +52,10 @@ router.get('/cliente/:salaoId', async(req, res) => {
             status: 'A'
         }).select('nome')
         res.json({
-            cliente: clientes.map((c) => ({ label: c.nome }))
+            clientes: clientes.map((c) => ({ 
+                label: c.nome,
+                value: c._id
+            }))
         })
     } catch (err) {
         res.json({ error: true, message: err.message })

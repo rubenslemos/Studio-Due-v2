@@ -156,11 +156,12 @@ router.post('/dias-disponiveis', async(req, res) => {
     try {
         const { data, salaoId, servicoId } = req.body
         const horarios = await horario.find({ salaoId })
-        const servicos = await servico.Servico.findById(servicoId).select('duracao')
+        const servicos = await servico.Servico.findById(servicoId).select('duracao _id')
         let agenda = []
         let colaboradores = []
         let lastDay = moment(data)
-
+        console.log('servicoId', servicoId)
+        console.log('servicos', servicos)
         //Duracao do serviço
         const servicoMinutos = util.hourToMinutes(moment(servicos.duracao).format('HH:mm'))
         const servicoSlots = util.sliceMinutes(
@@ -233,43 +234,46 @@ router.post('/dias-disponiveis', async(req, res) => {
                                 ), 'minutes')
                         }))
                         // formatacao de exibicao de horarios ocupados
-                    horariosOcupados = horariosOcupados.map((horarios) =>
-                            util.sliceMinutes(horarios.inicio, horarios.final, util.slotDuration)
+                        horariosOcupados = horariosOcupados.map((horarios) =>
+                        util.sliceMinutes(horarios.inicio, horarios.final, util.slotDuration)
                         ).flat()
                         //remover os horarios ocupados
                         /* if (todosHorariosDia[colaboradorId] == undefined) {
-                             continue
-                         } else {*/
-                    let horariosLivres = util.splitByValue(todosHorariosDia[colaboradorId].map((horarioLivre) => {
-                            return horariosOcupados.includes(horarioLivre) ? 'Ocupado' : horarioLivre
-                        }), 'Ocupado').filter((space) => space.length > 0)
-                        //}
+                            continue
+                        } else {*/
+                            let horariosLivres = util.splitByValue(todosHorariosDia[colaboradorId].map((horarioLivre) => {
+                                return horariosOcupados.includes(horarioLivre) ? 'Ocupado' : horarioLivre
+                            }), 'Ocupado').filter((space) => space.length > 0)
+                            //}
                         // Calcular se há horas suficiente pra agendar serviço
-                    horariosLivres = horariosLivres.filter(
+                        horariosLivres = horariosLivres.filter(
                             (horarios) => horarios.length >= servicoSlots
-                        )
-                        /*
-                        Verificar se há slots de horarios suficientes
-                        para agendamentos de serviços
-                        */
-                    horariosLivres = horariosLivres.map((slot) =>
-                            slot.filter((horario, index) =>
-                                slot.length - index >= servicoSlots)).flat()
-                        //formatando horários de 2 em 2
-                    horariosLivres = _.chunk(horariosLivres, 2)
-                        //remover colaborador caso n tenha horário livre
-                    if (horariosLivres.length == 0) {
-                        todosHorariosDia = _.omit(todosHorariosDia, colaboradorId)
-                    } else {
-                        todosHorariosDia[colaboradorId] = horariosLivres
-                    }
-                }
+                            )
+                            /*
+                            Verificar se há slots de horarios suficientes
+                            para agendamentos de serviços
+                            */
+                           horariosLivres = horariosLivres.map((slot) =>
+                           slot.filter((horario, index) =>
+                           slot.length - index >= servicoSlots)).flat()
+                           //formatando horários de 2 em 2
+                           horariosLivres = _.chunk(horariosLivres, 2)
+                           //remover colaborador caso n tenha horário livre
+                           if (horariosLivres.length == 0) {
+                               todosHorariosDia = _.omit(todosHorariosDia, colaboradorId)
+                            } else {
+                                todosHorariosDia[colaboradorId] = horariosLivres
+                            }
+                        }
+
                 //verificar se há colaborador naquele dia
                 const totalEspecialistas = Object.keys(todosHorariosDia).length
                 if (totalEspecialistas > 0) {
                     colaboradores.push(Object.keys(todosHorariosDia))
                     agenda.push({
-                        [lastDay.format('YYYY-MM-DD')]: todosHorariosDia
+                        [lastDay.format('YYYY-MM-DD')]: todosHorariosDia,
+                        label: moment(lastDay).format('YYYY-MM-DD'),
+                        value: moment(lastDay).format('YYYY-MM-DD'),                   
                     })
                 }
 
@@ -283,11 +287,13 @@ router.post('/dias-disponiveis', async(req, res) => {
         }).select('nome foto _id')
         colaboradores = colaboradores.map(c => ({
             ...c._doc,
-            nome: c.nome.split(' ')[0]
+            nome: c.nome.split(' ')[0],
+            label: c.nome.split(' ')[0],
+            value: c._id
         }))
         res.json({
             colaboradores,
-            agenda: agenda
+            agenda
         })
     } catch (err) {
         res.json({ error: true, message: err.message })
