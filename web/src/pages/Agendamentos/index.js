@@ -175,6 +175,7 @@ const Agendamentos = () => {
               onChange={(agenda)=>{
                 const date = moment(agenda.value).format('YYYY-MM-DD')
                 const dateISO = moment(date).format('YYYY-MM-DD')
+                console.log('dateISO',dateISO)
                 setAgendamentoData(dateISO)
               }}
             />
@@ -198,7 +199,6 @@ const Agendamentos = () => {
               block
               data={colaboradores}
               onChange={(e) => {setAgendamento('colaboradorId', e)
-              filterAgenda()
             }}
             />
           </div>
