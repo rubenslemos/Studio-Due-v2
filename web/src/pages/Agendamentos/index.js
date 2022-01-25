@@ -64,8 +64,15 @@ const Agendamentos = () => {
         value:horario[0]
       })
     })
-
+    var colaboradoresIdsDisponiveis =[]
+    for(let colaboradorId of Object.keys(colaboradoresDia)) {
+      let horarios = colaboradoresDia[colaboradorId].flat(2)
+      if (horarios.includes(horaSelecionada)){
+        colaboradoresIdsDisponiveis.push(colaboradorId)
+      }
+    }
   console.log("livres: ", livres)
+  console.log("colaboradoresIdsDisponiveis: ", colaboradoresIdsDisponiveis)
   const setComponents = (component, state) => {
     dispatch(
       updateAgendamentos({
